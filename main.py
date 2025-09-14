@@ -1,7 +1,8 @@
 import webview
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for
 import database
 import os
+import jinja2
 
 app = Flask(__name__)
 
@@ -16,8 +17,8 @@ window = webview.create_window(
 
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def home():
+    return render_template("index.html")
 
     
 
@@ -25,8 +26,7 @@ if __name__ == "__main__":
     # Garante que o banco de dados e as tabelas existam
     database.init_db()
 
-    # Nosso logo
-    icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logo.png')
-
     # Inicia o programa com o debug ativado
     webview.start(debug=True)
+
+    # app.run(debug=False)
