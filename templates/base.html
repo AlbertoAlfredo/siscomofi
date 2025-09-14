@@ -31,12 +31,9 @@
                             Arquivo
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">Clientes</a></li>
+                            <li><a class="dropdown-item" href="#">02</a></li>
+                            <li><a class="dropdown-item" href="#">03</a></li>
                         </ul>
                     </li>
                     <!-- fim dropdown -->
@@ -47,12 +44,35 @@
                             Movimentação
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">Lançamento Caixa/Banco</a></li>
+                            <li><a class="dropdown-item" href="#">Lançar Movimentos Receita/Despesas</a></li>
+                            <li><a class="dropdown-item" href="#">Lançar Honorário</a></li>
+                        </ul>
+                    </li>
+                    <!-- fim dropdown -->
+                     <!-- Inicio dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Clientes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/clientes-cadastro">Cadastro</a></li>
+                            <li><a class="dropdown-item" href="#">02</a></li>
+                            <li><a class="dropdown-item" href="#">03</a></li>
+                        </ul>
+                    </li>
+                    <!-- fim dropdown -->
+                     <!-- Inicio dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Relatórios
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Relatório 1</a></li>
+                            <li><a class="dropdown-item" href="#">Relatório 2</a></li>
+                            <li><a class="dropdown-item" href="#">Relatório 3</a></li>
                         </ul>
                     </li>
                     <!-- fim dropdown -->
@@ -62,17 +82,16 @@
                         <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
             </div>
         </div>
     </nav>
 
+    <div style="height: 60px"></div>
+
     {% block content %}{% endblock %}
 
+    <div style="height: 60px"></div>
 </body>
 <script src="{{url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.bundle.js')}}"></script>
-
+<script src="{{url_for('static', filename='phone-mask.js')}}"></script>
 </html>

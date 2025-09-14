@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form class="container" method="post">
+
+    <!-- {% if clientes %}
+        <h1>{{clientes}}</h1>
+    {% endif %} -->
+
+    <hr>
+    <h3>Dados principais</h3>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Nome</span>
+        <input name="nome" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Nome da propriedade</span>
+        <input name="npropriedade" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+
+    <hr>
+    <h3>Endereço</h3>
+
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Endereço</span>
+        <input name="endereco" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+
+        <span class="input-group-text" id="inputGroup-sizing-default">Número:</span>
+        <input name="numero" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+
+
+
+        <span class="input-group-text" id="inputGroup-sizing-default">Bairro:</span>
+        <input name="bairro" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Cidade</span>
+        <input name="cidade" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+        <label class="input-group-text" id="inputGroup-sizing-default">Estado:</label>
+
+
+        <select class="form-select" id="selectUf" name="uf" required>
+            <option selected disabled value="">Selecione um estado...</option>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+        </select>
+    </div>
+    <hr>
+    <h3>Dados Fiscais</h3>
+    <div class="input-group mb-3">
+        <label class="input-group-text" id="inputGroup-sizing-default">Tipo Pessoa:</label>
+
+
+        <select class="form-select" id="selectPessoa" name="tipopessoa" required>
+            <option selected disabled value="">Selecione um tipo...</option>
+            <option value="F">Física</option>
+            <option value="J">Jurídica</option>
+
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">CPF/CNPJ</span>
+        <input name="cpfcnpj" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Inscrição Estadual</span>
+        <input name="iestadual" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+
+    <hr>
+    <h3>Contato</h3>
+    <div class="input-group mb-3">
+        <span class="input-group-text telefone" id="inputGroup-sizing-default">Telefone</span>
+        <input name="fone" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text celular" id="inputGroup-sizing-default">Celular</span>
+        <input name="celular" type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);">
+    </div>
+    <hr>
+    <h3>Financeiro e Outros</h3>
+    <div class="input-group mb-3">
+        <span class="input-group-text celular" id="inputGroup-sizing-default">Valor do Honorário</span>
+        <input name="valorhonorario" type="number" step="0.01" min="0.01" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Observações</label>
+        <textarea name="observacoes" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="/clientes-cadastro"><button type="button" class="btn btn-danger">Limpar</button></a>
+</form>
+
+
+
+
+{% endblock %}

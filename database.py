@@ -36,10 +36,10 @@ def init_db():
     conexao.close()
     print("Banco de dados inicializado com sucesso.")
 
-    def get_conexao():
-        # Retorna uma nova conexão com o banco de dados.
-        db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), DB_NAME)
-        return sqlite3.connect(db_path)
+def get_conexao():
+    # Retorna uma nova conexão com o banco de dados.
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), DB_NAME)
+    return sqlite3.connect(db_path)
 
 def get_clientes():
     # Busca e retorna todos os clientes do banco de dados.
@@ -66,10 +66,10 @@ def adicionar_cliente(dados_cliente):
     conexao = get_conexao()
     cursor = conexao.cursor()
     try:
-        cursor.execute("""
+        cursor.execute(f"""
             INSERT INTO clientes (nome_cliente, nome_propriedade, endereco, numero, bairro, cidade, uf, tipo_pessoa, cpf_cnpj, inscricao_estadual, telefone, celular, valor_honorario, observacoes)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, tuple(dados_cliente.values()))
+            VALUES ('{dados_cliente["nome"]}', '{dados_cliente["nome_propriedade"]}', '{dados_cliente["endereco"]}', '{dados_cliente["numero"]}', '{dados_cliente["bairro"]}', '{dados_cliente["cidade"]}', '{dados_cliente["uf"]}', '{dados_cliente["tipo_pessoa"]}', '{dados_cliente["cpf_cnpj"]}','{dados_cliente["inscricao_estadual"]}', '{dados_cliente["telefone"]}', '{dados_cliente["celular"]}', '{dados_cliente["valor_honorario"]}','{dados_cliente["observacoes"]}')
+        """)
         conexao.commit()
     except sqlite3.IntegrityError:
         print(f"Erro: CPF/CNPJ '{dados_cliente['cpf_cnpj']}' já existe.")
