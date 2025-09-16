@@ -2,7 +2,7 @@ import webview
 from flask import Flask, render_template, redirect, url_for, request
 import database
 import os
-import jinja2
+import math
 
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def home():
     return render_template("index.html")
 
 @app.route("/clientes-cadastro", methods=['GET', 'POST'])
-def cadastro():
+def clientes_cadastro():
     if request.method == "POST":
 
         cliente = {
@@ -47,7 +47,21 @@ def cadastro():
     else:
         return render_template("clientes-cadastro.html")
 
-    
+@app.route("/clientes_lista", methods=['GET'])
+def clientes_lista():
+    page = request.args.get('page', 1, type=int)
+    ITENS_POR_PAGINA = 10
+    clientes_da_pagina = database.get_clientes_paginados(page, ITENS_POR_PAGINA)
+    total_clientes = database.count_total_clientes()
+    total_paginas = math.ceil(total_clientes / ITENS_POR_PAGINA)
+
+    return render_template("clientes-lista.html",
+                           clientes = clientes_da_pagina,
+                           pagina_atual = page,
+                           total_paginas = total_paginas
+                           )
+    # clientes_lista = database.get_clientes()
+    # return render_template("clientes-lista.html", clientes = clientes_lista)
 
 if __name__ == "__main__":
     # Garante que o banco de dados e as tabelas existam

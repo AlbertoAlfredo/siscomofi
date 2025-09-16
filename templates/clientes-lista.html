@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <ul class="list-group">
+    
+        {% for id, nome, cpf in clientes %}
+        <hr>
+        <li id="cliente--{{id}}" style="text-align: justify"> Nome: {{nome}} - CPF/CNPJ: {{ cpf }} <button type="button" class="btn btn-primary">Editar</button> <button type="button" class="btn btn-danger">Apagar</button> </li>
+        {% endfor %}
+
+    </ul>
+
+    <hr width="60px">
+
+    <nav aria-label="Navegação das páginas">
+      <ul class="pagination justify-content-center">
+
+        <!-- Botão "Anterior" -->
+        <li class="page-item {% if pagina_atual == 1 %}disabled{% endif %}">
+          <a class="page-link" href="{{ url_for('clientes_lista', page=pagina_atual-1) }}">Anterior</a>
+        </li>
+
+        <!-- Links para cada página -->
+        {% for p in range(1, total_paginas + 1) %}
+            <li class="page-item {% if p == pagina_atual %}active{% endif %}">
+                <a class="page-link" href="{{ url_for('clientes_lista', page=p) }}">{{ p }}</a>
+            </li>
+        {% endfor %}
+
+        <!-- Botão "Próximo" -->
+        <li class="page-item {% if pagina_atual == total_paginas %}disabled{% endif %}">
+          <a class="page-link" href="{{ url_for('clientes_lista', page=pagina_atual+1) }}">Próximo</a>
+        </li>
+
+      </ul>
+    </nav>
+</div>
+
+
+{% endblock %}

@@ -58,7 +58,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/clientes-cadastro">Cadastro</a></li>
-                            <li><a class="dropdown-item" href="#">02</a></li>
+                            <li><a class="dropdown-item" href="/clientes_lista">Listar</a></li>
                             <li><a class="dropdown-item" href="#">03</a></li>
                         </ul>
                     </li>
@@ -94,4 +94,11 @@
 </body>
 <script src="{{url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.bundle.js')}}"></script>
 <script src="{{url_for('static', filename='phone-mask.js')}}"></script>
+<style>
+      body {
+        -webkit-user-select: text; /* Para compatibilidade com o motor do Chrome/Safari */
+        -ms-user-select: text; /* Para compatibilidade com o motor da Microsoft */
+        user-select: text; /* O padrão */
+      }
+</style>
 </html>

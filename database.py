@@ -45,10 +45,37 @@ def get_clientes():
     # Busca e retorna todos os clientes do banco de dados.
     conexao = get_conexao()
     cursor = conexao.cursor()
-    cursor.execute("SELECT id, nome_cliente FROM clientes ORDER BY nome_cliente")
+    cursor.execute("SELECT id, nome_cliente, cpf_cnpj FROM clientes ORDER BY nome_cliente")
     clientes = cursor.fetchall()
     conexao.close()
     return clientes
+
+def get_clientes_paginados(page, per_page=10):
+    #Busca uma 'página' específica de clientes do banco de dados.
+    offset = (page - 1) * per_page
+    conexao = sqlite3.connect('siscomofi.db')
+    conexao.row_factory = sqlite3.Row # Facilita o acesso aos dados
+    cursor = conexao.cursor()
+    
+    query = f"SELECT id, nome_cliente, cpf_cnpj FROM clientes ORDER BY nome_cliente LIMIT {per_page} OFFSET {offset}"
+    cursor.execute(query)
+    
+    clientes = cursor.fetchall()
+    conexao.close()
+    return clientes
+
+def count_total_clientes():
+    #Conta o número total de clientes no banco.
+    conexao = sqlite3.connect('siscomofi.db')
+    cursor = conexao.cursor()
+    
+    query = "SELECT COUNT(id) FROM clientes"
+    cursor.execute(query)
+    
+    total = cursor.fetchone()[0] # Pega o primeiro valor da primeira linha
+    conexao.close()
+    return total
+
 
 def get_cliente_por_id(id_cliente):
     # Busca e retorna os dados de um cliente específico pelo seu ID
@@ -56,7 +83,7 @@ def get_cliente_por_id(id_cliente):
     # Usar row_factory para retornar resultados como dicionários
     conexao.row_factory = sqlite3.Row
     cursor = conexao.cursor()
-    cursor.execute("SELECT * FROM clientes WHERE id = ?", (id_cliente,))
+    cursor.execute(f"SELECT * FROM clientes WHERE id = {id_cliente}")
     cliente = cursor.fetchone()
     conexao.close()
     return cliente # Retorna um objeto tipo Row (acessível como um dicionário) ou None
@@ -104,6 +131,6 @@ def deletar_cliente(id_cliente):
     #Deleta um cliente do banco de dados.
     conexao = get_conexao()
     cursor = conexao.cursor()
-    cursor.execute("DELETE FROM clientes WHERE id = ?", (id_cliente,))
+    cursor.execute(f"DELETE FROM clientes WHERE id = {id_cliente}")
     conexao.commit()
     conexao.close()
