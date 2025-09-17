@@ -44,9 +44,40 @@ def clientes_cadastro():
         }
         database.adicionar_cliente(cliente)
         return render_template("clientes-cadastro.html")
+    elif request.method == 'GET' and request.args.get('id'):
+        cliente = database.get_cliente_por_id(request.args.get('id'))
+        return render_template("clientes-cadastro.html", cliente = cliente)
     else:
         return render_template("clientes-cadastro.html")
+    
+@app.route("/clientes-atualiza", methods=['GET', 'POST'])  
+def clientes_atualiza():
+    cliente = {
+        "id": request.form.get('id'),
+        "nome": request.form.get("nome"),
+        "nome_propriedade": request.form.get("npropriedade"),
+        "endereco": request.form.get("endereco"),
+        "numero": request.form.get("numero"),
+        "bairro": request.form.get("bairro"),
+        "cidade": request.form.get("cidade"),
+        "uf": request.form.get("uf"),
+        "tipo_pessoa": request.form.get("tipopessoa"),
+        "cpf_cnpj": request.form.get("cpfcnpj"),
+        "inscricao_estadual": request.form.get("iestadual"),
+        "telefone": request.form.get("fone"),
+        "celular": request.form.get("celular"),
+        "valor_honorario": request.form.get("valorhonorario"),
+        "observacoes": request.form.get("observacoes"),
+    }
+    database.atualizar_cliente(cliente['id'], cliente)
+    return redirect(url_for('clientes_lista'))
 
+@app.route("/cliente_apagar", methods=['GET'])
+def cliente_apagar():
+    cliente_id = request.args.get('id')
+    database.deletar_cliente(cliente_id)
+    return redirect(url_for('clientes_lista'))
+    
 @app.route("/clientes_lista", methods=['GET'])
 def clientes_lista():
     page = request.args.get('page', 1, type=int)
