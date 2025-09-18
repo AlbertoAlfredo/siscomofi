@@ -5,7 +5,12 @@ import os
 import math
 
 
-app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+app = Flask(__name__,
+            static_folder=os.path.join(basedir, 'static'),
+            template_folder=os.path.join(basedir, 'templates')
+)
 
 # Cria a janela do pywebview, passando o servidor Flask
 window = webview.create_window(
@@ -98,7 +103,7 @@ if __name__ == "__main__":
     # Garante que o banco de dados e as tabelas existam
     database.init_db()
 
-    # Inicia o programa com o debug ativado
+    #Inicia o programa com o debug ativado
     webview.start(
         debug=False,
         icon="static/logo.png"
