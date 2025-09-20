@@ -15,19 +15,19 @@
 {% endif %}
 
 
-     
+
 
     <hr>
     <h3>Dados principais</h3>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">Nome</span>
         <input name="nome" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['nome_cliente'] if cliente else ""}}">
+            aria-describedby="inputGroup-sizing-default" value="{{cliente.nome_cliente if cliente else ""}}">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">Nome da propriedade</span>
         <input name="npropriedade" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['nome_propriedade'] if cliente else ""}}">
+            aria-describedby="inputGroup-sizing-default" value="{{cliente.nome_propriedade if cliente else ""}}">
     </div>
 
     <hr>
@@ -118,7 +118,7 @@
         <label class="input-group-text" id="inputGroup-sizing-default">Tipo Pessoa:</label>
 
         {% if cliente %}
-            {% if cliente['tipo_pessoa'] == 'F' %}
+            {% if cliente.tipo_pessoa == 'F' %}
             <select class="form-select" id="selectPessoa" name="tipopessoa" required>
                 <option selected value="F">Física</option>
                 <option value="J">Jurídica</option>
@@ -142,12 +142,12 @@
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">CPF/CNPJ</span>
         <input name="cpfcnpj"  type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['cpf_cnpj'] if cliente else ""}}">
+            aria-describedby="inputGroup-sizing-default" value="{{cliente.cpf_cnpj if cliente else ""}}">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">Inscrição Estadual</span>
         <input name="iestadual" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['inscricao_estadual'] if cliente else ""}}">
+            aria-describedby="inputGroup-sizing-default" value="{{cliente.inscricao_estadual if cliente else ""}}">
     </div>
 
     <hr>
@@ -155,23 +155,23 @@
     <div class="input-group mb-3">
         <span class="input-group-text telefone" id="inputGroup-sizing-default">Telefone</span>
         <input name="fone" type="tel" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['telefone'] if cliente else ""}}">
+            aria-describedby="inputGroup-sizing-default" value="{{cliente.telefone if cliente else ""}}">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text celular" id="inputGroup-sizing-default">Celular</span>
         <input name="celular" type="tel" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['celular'] if cliente else ""}}">
+            aria-describedby="inputGroup-sizing-default" value="{{cliente.celular if cliente else ""}}">
     </div>
     <hr>
     <h3>Financeiro e Outros</h3>
     <div class="input-group mb-3">
         <span class="input-group-text celular" id="inputGroup-sizing-default">Valor do Honorário</span>
-        <input name="valorhonorario" type="tel" step="0.01" min="0" class="form-control"
-            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="{{cliente['valor_honorario'] if cliente else ""}}">
+        <input name="valorhonorario" type="number" step="0.01" min="0" class="form-control"
+            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="{{cliente.valor_honorario if cliente else ""}}">
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Observações</label>
-        <textarea name="observacoes" class="form-control" id="exampleFormControlTextarea1" rows="3">{{cliente['observacoes'].strip() if cliente else ""}}</textarea>
+        <textarea name="observacoes" class="form-control" id="exampleFormControlTextarea1" rows="3">{{cliente.observacoes.strip() if cliente else ""}}</textarea>
     </div>
 
     <button type="submit" class="btn btn-success">Salvar</button>

@@ -1,160 +1,125 @@
-import sqlite3
 import os
+from sqlalchemy import create_engine, Column, Integer, String, Float
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-DB_NAME = "siscomofi.db"
+# Pega o caminho absoluto do diretório onde este arquivo está
+basedir = os.path.abspath(os.path.dirname(__file__))
+# Define o caminho completo para o arquivo do banco de dados
+db_path = os.path.join(basedir, 'siscomofi.db')
+
+# Cria o "motor" que vai se conectar ao nosso banco de dados SQLite
+# O 'echo=True' é ótimo para desenvolvimento, pois imprime no console o SQL que está sendo gerado.
+engine = create_engine(f'sqlite:///{db_path}', echo=False)
+
+# Cria uma "fábrica" de sessões para interagir com o banco
+Session = sessionmaker(bind=engine)
+
+# Base para nossos modelos ORM
+Base = declarative_base()
+
 
 def init_db():
-    # Inicializa o banco de dados e cria a tabela de clientes se não existir.
-    # Garante que o banco de dados seja criado na mesma pasta do script
-    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), DB_NAME)
+    # Cria as tabelas no banco de dados, se elas não existirem.
+    Base.metadata.create_all(engine)
+    print("Banco de dados e tabelas verificados/criados com sucesso.")
+
+
+class Cliente(Base):
+    __tablename__ = 'clientes'
+
+    id = Column(Integer, primary_key=True)
+    nome_cliente = Column(String(100), nullable=False)
+    nome_propriedade = Column(String(100))
+    endereco = Column(String(150))
+    numero = Column(String(10))
+    bairro = Column(String(50))
+    cidade = Column(String(50))
+    uf = Column(String(2))
+    tipo_pessoa = Column(String(10))
+    cpf_cnpj = Column(String(18))
+    inscricao_estadual = Column(String(20))
+    telefone = Column(String(15))
+    celular = Column(String(15))
+    valor_honorario = Column(Float)
+    observacoes = Column(String(500))
     
-    conexao = sqlite3.connect(db_path)
-    cursor = conexao.cursor()
+    def to_dict(self):
+        # Converte o objeto Cliente em um dicionário para fácil uso no front-end.
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
-    # Usamos TEXT para todos os campos por simplicidade. Validações serão feitas na lógica.
-    query = '''
-    CREATE TABLE IF NOT EXISTS clientes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome_cliente TEXT NOT NULL,
-        nome_propriedade TEXT,
-        endereco TEXT,
-        numero TEXT,
-        bairro TEXT,
-        cidade TEXT,
-        uf TEXT,
-        tipo_pessoa TEXT,
-        cpf_cnpj TEXT UNIQUE,
-        inscricao_estadual TEXT,
-        telefone TEXT,
-        celular TEXT,
-        valor_honorario REAL,
-        observacoes TEXT
-    );
-    '''
-    cursor.execute(query)
-    conexao.commit()
-    conexao.close()
-    print("Banco de dados inicializado com sucesso.")
+def adicionar_cliente(dados_cliente):
+    # Adiciona um novo cliente ao banco de dados.
+    session = Session()
+    try:
+        novo_cliente = Cliente(**dados_cliente) # Cria um Cliente a partir do dicionário
+        session.add(novo_cliente)
+        session.commit()
+        return novo_cliente.id
+    except Exception as e:
+        session.rollback()
+        print(f"Erro ao adicionar cliente: {e}")
+        return None
+    finally:
+        session.close()
+        
+def atualizar_cliente(id_cliente, dados_update):
+    # Atualiza os dados de um cliente.
+    session = Session()
+    try:
+        cliente = session.query(Cliente).filter_by(id=id_cliente).first()
+        if cliente:
+            for key, value in dados_update.items():
+                setattr(cliente, key, value)
+            session.commit()
+            return True
+        return False
+    except Exception as e:
+        session.rollback()
+        print(f"Erro ao atualizar cliente: {e}")
+        return False
+    finally:
+        session.close()
 
-def get_conexao():
-    # Retorna uma nova conexão com o banco de dados.
-    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), DB_NAME)
-    return sqlite3.connect(db_path)
-
-def get_clientes():
-    # Busca e retorna todos os clientes do banco de dados.
-    conexao = get_conexao()
-    cursor = conexao.cursor()
-    cursor.execute("SELECT id, nome_cliente, cpf_cnpj FROM clientes ORDER BY nome_cliente")
-    clientes = cursor.fetchall()
-    conexao.close()
-    return clientes
-
-def get_clientes_paginados(page, per_page=10):
-    #Busca uma 'página' específica de clientes do banco de dados.
+def get_clientes_paginados(page=1, per_page=10):
+    # Busca uma 'página' de clientes do banco de dados.
+    session = Session()
     offset = (page - 1) * per_page
-    conexao = sqlite3.connect('siscomofi.db')
-    conexao.row_factory = sqlite3.Row # Facilita o acesso aos dados
-    cursor = conexao.cursor()
-    
-    query = f"SELECT id, nome_cliente, cpf_cnpj FROM clientes ORDER BY nome_cliente LIMIT {per_page} OFFSET {offset}"
-    cursor.execute(query)
-    
-    clientes = cursor.fetchall()
-    conexao.close()
-    return clientes
+    clientes = session.query(Cliente).order_by(Cliente.nome_cliente).limit(per_page).offset(offset).all()
+    total = session.query(Cliente).count()
+    session.close()
+    return [cliente.to_dict() for cliente in clientes]
+
+def get_cliente_por_id(id_cliente):
+    # Busca um único cliente pelo seu ID.
+    session = Session()
+    cliente = session.query(Cliente).filter_by(id=id_cliente).first()
+    session.close()
+    return cliente.to_dict() if cliente else None
 
 def count_total_clientes():
-    #Conta o número total de clientes no banco.
-    conexao = sqlite3.connect('siscomofi.db')
-    cursor = conexao.cursor()
-    
-    query = "SELECT COUNT(id) FROM clientes"
-    cursor.execute(query)
-    
-    total = cursor.fetchone()[0] # Pega o primeiro valor da primeira linha
-    conexao.close()
+    # Conta o número total de clientes para a paginação.
+    session = Session()
+    total = session.query(Cliente).count()
+    session.close()
     return total
 
 
-def get_cliente_por_id(id_cliente):
-    # Busca e retorna os dados de um cliente específico pelo seu ID
-    conexao = get_conexao()
-    # Usar row_factory para retornar resultados como dicionários
-    conexao.row_factory = sqlite3.Row
-    cursor = conexao.cursor()
-    cursor.execute(f"SELECT * FROM clientes WHERE id = {id_cliente}")
-    cliente = cursor.fetchone()
-    conexao.close()
-    return cliente # Retorna um objeto tipo Row (acessível como um dicionário) ou None
-
-def adicionar_cliente(dados_cliente):
-    # Adiciona um novo cliente ao banco de dados.
-    conexao = get_conexao()
-    cursor = conexao.cursor()
-    try:
-        cursor.execute(f"""
-            INSERT INTO clientes (nome_cliente, nome_propriedade, endereco, numero, bairro, cidade, uf, tipo_pessoa, cpf_cnpj, inscricao_estadual, telefone, celular, valor_honorario, observacoes)
-            VALUES ('{dados_cliente["nome"]}', '{dados_cliente["nome_propriedade"]}', '{dados_cliente["endereco"]}', '{dados_cliente["numero"]}', '{dados_cliente["bairro"]}', '{dados_cliente["cidade"]}', '{dados_cliente["uf"]}', '{dados_cliente["tipo_pessoa"]}', '{dados_cliente["cpf_cnpj"]}','{dados_cliente["inscricao_estadual"]}', '{dados_cliente["telefone"]}', '{dados_cliente["celular"]}', '{dados_cliente["valor_honorario"]}','{dados_cliente["observacoes"]}')
-        """)
-        conexao.commit()
-    except sqlite3.IntegrityError:
-        print(f"Erro: CPF/CNPJ '{dados_cliente['cpf_cnpj']}' já existe.")
-        return False
-    finally:
-        conexao.close()
-    return True
-
-def atualizar_cliente(id_cliente, dados_cliente):
-    # Atualiza os dados de um cliente existente.
-    query = f"""
-                UPDATE clientes
-                SET
-                    {"nome_cliente = '" + dados_cliente['nome'] + "'"  if dados_cliente['nome'] else ''}
-                    {", nome_propriedade = '" + dados_cliente['nome_propriedade'] + "'"  if dados_cliente['nome_propriedade'] else ''}
-                    {", endereco = '" + dados_cliente['endereco'] + "'"  if dados_cliente['endereco'] else ''}
-                    {", numero = '" + dados_cliente['numero'] + "'"  if dados_cliente['numero'] else ''}
-                    {", bairro = '" + dados_cliente['bairro'] + "'"  if dados_cliente['bairro'] else ''}
-                    {", cidade = '" + dados_cliente['cidade'] + "'"  if dados_cliente['cidade'] else ''}
-                    {", uf = '" + dados_cliente['uf'] + "'"  if dados_cliente['uf'] else ''}
-                    {", tipo_pessoa = '" + dados_cliente['tipo_pessoa'] + "'"  if dados_cliente['tipo_pessoa'] else ''}
-                    {", cpf_cnpj = '" + dados_cliente['cpf_cnpj'] + "'"  if dados_cliente['cpf_cnpj'] else ''}
-                    {", inscricao_estadual = '" + dados_cliente['inscricao_estadual'] + "'"  if dados_cliente['inscricao_estadual'] else ''}
-                    {", telefone = '" + dados_cliente['telefone'] + "'"  if dados_cliente['telefone'] else ''}
-                    {", celular = '" + dados_cliente['celular'] + "'"  if dados_cliente['celular'] else ''}
-                    {", valor_honorario = '" + dados_cliente['valor_honorario'] + "'"  if dados_cliente['valor_honorario'] else ''}
-                    {", observacoes = '" + dados_cliente['observacoes'] + "'" if dados_cliente['observacoes'] else ''}
-                WHERE
-                    id = '{dados_cliente['id']}'
-            """
-    try:
-        conexao = get_conexao()
-        cursor = conexao.cursor()
-
-        cursor.execute(query)
-        print(f"query = {query}")
-        conexao.commit()
-            
-        # Verifica se alguma linha foi realmente alterada
-        if cursor.rowcount > 0:
-            print(f"Cliente com ID {id_cliente} atualizado com sucesso.")
-            return True
-        else:
-            print(f"Nenhum cliente encontrado com o ID {id_cliente}.")
-            return False
-
-    except Exception as e:
-        print(f"Ocorreu um erro ao atualizar o cliente: {e}")
-        print(f"query = {query}")
-        return False
-    finally:
-        if 'conexao' in locals() and conexao:  # pyright: ignore[reportPossiblyUnboundVariable]
-            conexao.close()    
 
 def deletar_cliente(id_cliente):
-    #Deleta um cliente do banco de dados.
-    conexao = get_conexao()
-    cursor = conexao.cursor()
-    cursor.execute(f"DELETE FROM clientes WHERE id = {id_cliente}")
-    conexao.commit()
-    conexao.close()
+    # Deleta um cliente do banco de dados.
+    session = Session()
+    try:
+        cliente = session.query(Cliente).filter_by(id=id_cliente).first()
+        if cliente:
+            session.delete(cliente)
+            session.commit()
+            return True
+        return False
+    except Exception as e:
+        session.rollback()
+        print(f"Erro ao deletar cliente: {e}")
+        return False
+    finally:
+        session.close()
+

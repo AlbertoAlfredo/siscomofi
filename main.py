@@ -32,7 +32,7 @@ def clientes_cadastro():
     if request.method == "POST":
 
         cliente = {
-            "nome": request.form["nome"],
+            "nome_cliente": request.form["nome"],
             "nome_propriedade": request.form["npropriedade"],
             "endereco": request.form["endereco"],
             "numero": request.form["numero"],
@@ -59,7 +59,7 @@ def clientes_cadastro():
 def clientes_atualiza():
     cliente = {
         "id": request.form.get('id'),
-        "nome": request.form.get("nome"),
+        "nome_cliente": request.form.get("nome"),
         "nome_propriedade": request.form.get("npropriedade"),
         "endereco": request.form.get("endereco"),
         "numero": request.form.get("numero"),

@@ -7,10 +7,10 @@
 <div class="container">
     <ul class="list-group">
     
-        {% for id, nome, cpf in clientes %}
+        {% for cliente in clientes %}
         <hr>
-        <li id="cliente--{{id}}" style="text-align: justify"> Nome: {{nome}} - CPF/CNPJ: {{ cpf }} 
-        <a href="{{url_for('clientes_cadastro', id=id)}}"><button type="button" class="btn btn-primary">Editar</button></a> 
+        <li id="cliente--{{cliente.id}}" style="text-align: justify"> Nome: {{cliente.nome_cliente}} - CPF/CNPJ: {{ cliente.cpf_cnpj }} 
+        <a href="{{url_for('clientes_cadastro', id=cliente.id)}}"><button type="button" class="btn btn-primary">Editar</button></a> 
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalApagar">Apagar</button>
         <div class="modal fade" id="modalApagar" tabindex="-1" aria-labelledby="modalApagarLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -24,7 +24,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Voltar</button>
-                <a href="{{url_for('cliente_apagar', id=id)}}"><button type="button" class="btn btn-danger">Apagar</button></a>
+                <a href="{{url_for('cliente_apagar', id=cliente.id)}}"><button type="button" class="btn btn-danger">Apagar</button></a>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
       </ul>
     </nav>
     <hr style="height: 60px">
-</div>
+</div> 
 
 
 {% endblock %}
