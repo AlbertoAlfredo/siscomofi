@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_form_macros.html" as form %}
 
 {% block content %}
 
@@ -7,8 +8,7 @@
     <form class="container" method="post" action="{{url_for('clientes_atualiza')}}">
     <div class="input-group mb-3"  style="display: none;">
         <span class="input-group-text" id="inputGroup-sizing-default">Id interno do cliente</span>
-        <input name="id" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['id']}}">
+        <input name="id" type="text" class="form-control" value="{{ cliente.id }}">
     </div>
 {% else %}
     <form class="container" method="post" action="{{url_for('clientes_cadastro')}}">
@@ -19,42 +19,21 @@
 
     <hr>
     <h3>Dados principais</h3>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Nome</span>
-        <input name="nome" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente.nome_cliente if cliente else ""}}">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Nome da propriedade</span>
-        <input name="npropriedade" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente.nome_propriedade if cliente else ""}}">
-    </div>
+    {{ form.input_field(name="nome", type='text', label='Nome', value=cliente.nome_cliente if cliente else '' , placeholder='', required='false', class='') }}
 
+    {{ form.input_field(name="npropriedade", type='text', label='Nome da propriedade', value=cliente.nome_propriedade if cliente else '' , placeholder='', required='false', class='') }}
     <hr>
     <h3>Endereço</h3>
 
-
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Endereço</span>
-        <input name="endereco" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['endereco'] if cliente else ""}}">
-    </div>
+    {{ form.input_field(name="endereco", type='text', label='Endereço', value=cliente.endereco if cliente else "" , placeholder='', required='false', class='') }}
     <div class="input-group mb-3">
 
-        <span class="input-group-text" id="inputGroup-sizing-default">Número:</span>
-        <input name="numero" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['numero'] if cliente else ""}}">
+        {{ form.input_field(name="numero", type='text', label='Número', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
 
+        {{ form.input_field(name="bairro", type='text', label='Bairro', value=cliente.bairro if cliente else "" , placeholder='', required='false', class='') }}
 
-
-        <span class="input-group-text" id="inputGroup-sizing-default">Bairro:</span>
-        <input name="bairro" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['bairro'] if cliente else ""}}">
-    </div>
     <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Cidade</span>
-        <input name="cidade" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente['cidade'] if cliente else ""}}">
+        {{ form.input_field(name="cidade", type='text', label='Cidade', value=cliente.cidade if cliente else "" , placeholder='', required='false', class='') }}
         <label class="input-group-text" id="inputGroup-sizing-default">Estado:</label>
 
 
@@ -139,24 +118,15 @@
         </select>
         {% endif %}
     </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">CPF/CNPJ</span>
-        <input name="cpfcnpj"  type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente.cpf_cnpj if cliente else ""}}">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Inscrição Estadual</span>
-        <input name="iestadual" type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente.inscricao_estadual if cliente else ""}}">
-    </div>
+
+    {{ form.input_field(name="cpfcnpj", type='text', label='CPF/CNPJ', value=cliente.cpfcnpj if cliente else "" , placeholder='', required='false', class='') }}
+
+    {{ form.input_field(name="iestadual", type='text', label='Inscrição Estadual', value=cliente.iestadual if cliente else "" , placeholder='', required='false', class='') }}
 
     <hr>
     <h3>Contato</h3>
-    <div class="input-group mb-3">
-        <span class="input-group-text telefone" id="inputGroup-sizing-default">Telefone</span>
-        <input name="fone" type="tel" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente.telefone if cliente else ""}}">
-    </div>
+
+    {{ form.input_field(name="fone", type='tel', label='Telefone', value=cliente.fone if cliente else "" , placeholder='', required='false', class='') }}
     <div class="input-group mb-3">
         <span class="input-group-text celular" id="inputGroup-sizing-default">Celular</span>
         <input name="celular" type="tel" class="form-control" aria-label="Sizing example input"

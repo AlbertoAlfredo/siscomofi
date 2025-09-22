@@ -1,0 +1,10 @@
+{% macro input_field(name, type='text', label='', value='', placeholder='', required='false', class='') %}
+
+<div class="input-group mb-3">
+{% if label %}
+    <span class="input-group-text" id="inputGroup-sizing-default"> {{ label }} </span>
+{% endif %}
+    <input name="{{name}}" type="{{type}}" class="form-control {{class}}" value=" {{ value }}" placeholder="{{ placeholder }}" required="{{ required }}">
+</div>
+
+{% endmacro %}
