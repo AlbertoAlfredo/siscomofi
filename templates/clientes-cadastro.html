@@ -132,6 +132,7 @@
         <input name="celular" type="tel" class="form-control" aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-default" value="{{cliente.celular if cliente else ""}}">
     </div>
+    {{ form.input_field(name="celualr", type='tel', label='Celular', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
     <hr>
     <h3>Financeiro e Outros</h3>
     <div class="input-group mb-3">
@@ -142,10 +143,11 @@
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Observações</label>
         <textarea name="observacoes" class="form-control" id="exampleFormControlTextarea1" rows="3">{{cliente.observacoes.strip() if cliente else ""}}</textarea>
+        <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="/clientes-cadastro"><button type="button" class="btn btn-danger">Limpar</button></a>
     </div>
 
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a href="/clientes-cadastro"><button type="button" class="btn btn-danger">Limpar</button></a>
+    
 </form>
 
 
