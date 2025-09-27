@@ -5,13 +5,13 @@
 
 {% if cliente %}
     
-    <form class="container" method="post" action="{{url_for('clientes_atualiza')}}">
+    <form class="container" method="post" action="{{url_for('cliente_bp.clientes_atualiza')}}">
     <div class="input-group mb-3"  style="display: none;">
         <span class="input-group-text" id="inputGroup-sizing-default">Id interno do cliente</span>
         <input name="id" type="text" class="form-control" value="{{ cliente.id }}">
     </div>
 {% else %}
-    <form class="container" method="post" action="{{url_for('clientes_cadastro')}}">
+    <form class="container" method="post" action="{{url_for('cliente_bp.clientes_cadastro')}}">
 {% endif %}
 
 
@@ -132,7 +132,7 @@
         <input name="celular" type="tel" class="form-control" aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-default" value="{{cliente.celular if cliente else ""}}">
     </div>
-    {{ form.input_field(name="celualr", type='tel', label='Celular', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="celuLar", type='tel', label='Celular', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
     <hr>
     <h3>Financeiro e Outros</h3>
     <div class="input-group mb-3">
