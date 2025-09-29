@@ -9,4 +9,12 @@ caixa_bp = Blueprint(
 
 @caixa_bp.route('/caixabanco', methods=["GET", "POST"])
 def caixa_banco():
+    if request.method == "POST":
+        lancamento = {
+            "movimento": {
+                'data_lancamento': request.form.data_lancamento,
+                'n_doc': request.form.n_doc,
+                'historico_lancamento': request.form.historico_lancamento
+            }
+        }
     return render_template('lancamentos_caixa_banco.html')
