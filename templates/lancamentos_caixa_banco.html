@@ -59,7 +59,20 @@
                 
             </div>
             <div class="tab-pane fade" id="nav-agenfa" role="tabpanel" aria-labelledby="nav-agenfa-tab" tabindex="0">
-                turuf
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="agenfa_data_pagamento", type='date', label='Data de pagamento', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="agenfa_n_cheque", type='date', label='N° do Cheque', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="agenfa_descricao_pagamento", type='number', label='Descrição do pgto', value=lancamento.agenfa_descricao_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="agenfa_valor_pagamento", type='number', label='Valor Pgto', value=lancamento.agenfa_valor_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="nav-iagro" role="tabpanel" aria-labelledby="nav-iagro-tab" tabindex="0">...</div>
             <div class="tab-pane fade" id="nav-pagamentos" role="tabpanel" aria-labelledby="nav-pagamentos-tab" tabindex="0">...</div>
