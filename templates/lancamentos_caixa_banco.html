@@ -22,7 +22,41 @@
             <div class="tab-pane fade active show" id="nav-movimento" role="tabpanel" aria-labelledby="nav-home-tab"
                 tabindex="0"> 
                 <h3>Movimento</h3>
-                {{ form.input_field(name="data_lancamento", type='date', label='Data de lançamento', value=lancamento.data_lancamento if lancamento else '' , placeholder='', required='false', class='') }}
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="data_lancamento", type='date', label='Data de lançamento', value=lancamento.data_lancamento if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="n_documento", type='number', label='Número do Documento', value=lancamento.n_documento if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="hist_lancamento", type='text', label='Histórico de Lançamento', value=lancamento.hist_lancamento if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="credito_deposito", type='number', label='Crédito/Depósito R$:', value=lancamento.credito_deposito if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="debito_saque", type='number', label='Débito/Saque R$:', value=lancamento.debito_saque if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="deposito_bloqueado", type='number', label='Depósito bloqueado R$:', value=lancamento.deposito_bloqueado if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="taxa_servico_mensal", type='number', label='Taxa de serviços mensais R$:', value=lancamento.taxa_servico_mensal if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="tx_servicos_diversos", type='number', label='Taxa de Serviços Diversos R$:', value=lancamento.tx_servicos_diversos if lancamento else '' , placeholder='', required='false', class='') }}
+                    </div>
+                </div>
+                
             </div>
             <div class="tab-pane fade" id="nav-agenfa" role="tabpanel" aria-labelledby="nav-agenfa-tab" tabindex="0">
                 turuf
