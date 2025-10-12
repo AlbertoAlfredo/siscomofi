@@ -101,16 +101,16 @@
             <div class="tab-pane fade" id="nav-iagro" role="tabpanel" aria-labelledby="nav-iagro-tab" tabindex="0">
                 <div class="row">
                     <div class="col">
-                        {{ form.input_field(name="agenfa_data_pagamento", type='date', label='Data de pagamento', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="iagro_data_pagamento", type='date', label='Data de pagamento', value=lancamento.iagro_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_n_cheque", type='number', label='N° do Cheque', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="iagro_n_cheque", type='number', label='N° do Cheque', value=lancamento.iagro_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_descricao_pagamento", type='text', label='Descrição do pgto', value=lancamento.agenfa_descricao_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="iagro_descricao_pagamento", type='text', label='Descrição do pgto', value=lancamento.iagro_descricao_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_valor_pagamento", type='number', label='Valor Pgto', value=lancamento.agenfa_valor_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="iagro_valor_pagamento", type='number', label='Valor Pgto', value=iagro.iagro_valor_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     
                 </div>
@@ -141,16 +141,16 @@
             <div class="tab-pane fade" id="nav-pagamentos" role="tabpanel" aria-labelledby="nav-pagamentos-tab" tabindex="0">
                 <div class="row">
                     <div class="col">
-                        {{ form.input_field(name="agenfa_data_pagamento", type='date', label='Data de pagamento', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="pagamentos_data_pagamento", type='date', label='Data de pagamento', value=lancamento.pagamentos_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_n_cheque", type='number', label='N° do Cheque', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="pagamentos_n_cheque", type='number', label='N° do Cheque', value=lancamento.pagamentos_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_descricao_pagamento", type='text', label='Descrição do pgto', value=lancamento.agenfa_descricao_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="pagamentos_descricao_pagamento", type='text', label='Descrição do pgto', value=lancamento.pagamentos_descricao_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_valor_pagamento", type='number', label='Valor Pgto', value=lancamento.agenfa_valor_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="pagamentos_valor_pagamento", type='number', label='Valor Pgto', value=lancamento.pagamentos_valor_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     
                 </div>
@@ -181,16 +181,16 @@
             <div class="tab-pane fade" id="nav-outros" role="tabpanel" aria-labelledby="nav-outros-tab" tabindex="0">
                 <div class="row">
                     <div class="col">
-                        {{ form.input_field(name="agenfa_data_pagamento", type='date', label='Data de pagamento', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="outros_data_pagamento", type='date', label='Data de pagamento', value=lancamento.outros_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_n_cheque", type='number', label='N° do Cheque', value=lancamento.agenfa_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="outros_n_cheque", type='number', label='N° do Cheque', value=lancamento.outros_data_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_descricao_pagamento", type='text', label='Descrição do pgto', value=lancamento.agenfa_descricao_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="outros_descricao_pagamento", type='text', label='Descrição do pgto', value=lancamento.outros_descricao_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
-                        {{ form.input_field(name="agenfa_valor_pagamento", type='number', label='Valor Pgto', value=lancamento.agenfa_valor_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
+                        {{ form.input_field(name="outros_valor_pagamento", type='number', label='Valor Pgto', value=lancamento.outros_valor_pagamento if lancamento else '' , placeholder='', required='false', class='') }}
                     </div>
                     
                 </div>
