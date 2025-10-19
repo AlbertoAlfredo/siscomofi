@@ -4,7 +4,11 @@
 {% if label %}
     <span class="input-group-text" id="inputGroup-sizing-default"> {{ label }} </span>
 {% endif %}
+{% if type == "money" %}
+<input name="{{name}}" type="number" min="0.01" step="0.01" value="0.00" class="form-control {{class}}" value=" {{ value }}" placeholder="{{ placeholder }}" required="{{ required }}">
+{% else %}
     <input name="{{name}}" type="{{type}}" class="form-control {{class}}" value=" {{ value }}" placeholder="{{ placeholder }}" required="{{ required }}">
+{% endif %}
 </div>
 
 {% endmacro %}
