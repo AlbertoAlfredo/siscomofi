@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, Float
 from .base import Base, Session  # Importa do nosso arquivo base.py
 
+session = Session()
+
 
 class Cliente(Base):
     __tablename__ = "clientes"
@@ -18,7 +20,7 @@ class Cliente(Base):
     inscricao_estadual = Column(String(20))
     telefone = Column(String(15))
     celular = Column(String(15))
-    valor_honorario = Column(Float)
+    valor_honorario = Column(Integer)
     observacoes = Column(String(500))
 
     def to_dict(self):
@@ -28,7 +30,6 @@ class Cliente(Base):
 
 def adicionar_cliente(dados_cliente):
     # Adiciona um novo cliente ao banco de dados.
-    session = Session()
     try:
         novo_cliente = Cliente(
             **dados_cliente
@@ -46,7 +47,6 @@ def adicionar_cliente(dados_cliente):
 
 def atualizar_cliente(id_cliente, dados_update):
     # Atualiza os dados de um cliente.
-    session = Session()
     try:
         cliente = session.query(Cliente).filter_by(id=id_cliente).first()
         if cliente:
@@ -65,7 +65,6 @@ def atualizar_cliente(id_cliente, dados_update):
 
 def get_clientes_paginados(page=1, per_page=10):
     # Busca uma 'página' de clientes do banco de dados.
-    session = Session()
     offset = (page - 1) * per_page
     clientes = (
         session.query(Cliente)
@@ -74,14 +73,12 @@ def get_clientes_paginados(page=1, per_page=10):
         .offset(offset)
         .all()
     )
-    total = session.query(Cliente).count()
     session.close()
     return [cliente.to_dict() for cliente in clientes]
 
 
 def get_cliente_por_id(id_cliente):
     # Busca um único cliente pelo seu ID.
-    session = Session()
     cliente = session.query(Cliente).filter_by(id=id_cliente).first()
     session.close()
     return cliente.to_dict() if cliente else None
@@ -89,7 +86,6 @@ def get_cliente_por_id(id_cliente):
 
 def count_total_clientes():
     # Conta o número total de clientes para a paginação.
-    session = Session()
     total = session.query(Cliente).count()
     session.close()
     return total
@@ -97,7 +93,6 @@ def count_total_clientes():
 
 def deletar_cliente(id_cliente):
     # Deleta um cliente do banco de dados.
-    session = Session()
     try:
         cliente = session.query(Cliente).filter_by(id=id_cliente).first()
         if cliente:
