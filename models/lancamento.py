@@ -47,9 +47,9 @@ def adicionar_lancamento(lancamento):
         session.close()
 
 
-def atualizar_lancamento(id, dados):
+def atualizar_lancamento(id_dados, dados):
     try:
-        lancamento = session.query(Lancamentos).filter_by(id=id).first()
+        lancamento = session.query(Lancamentos).filter_by(id=id_dados).first()
         if lancamento:
             for key, value in dados.items():
                 setattr(lancamento, key, value)
@@ -68,3 +68,18 @@ def get_lancamentos():
     lancamento = session.query(Lancamentos).order_by(Lancamentos.id).all()
     session.close()
     return [lancamento.to_dict() for i in lancamento]
+
+def deletar_lancamento(id_dados):
+    try:
+        lancamento = session.query(Lancamentos).filter_by(id=id_dados).first()
+        if lancamento:
+            session.delete(lancamento)
+            session.commit()
+            return True
+        return False
+    except Exception as e:
+        session.rollback()
+        print(f"Erro ao deletar lançamento: {e}")
+        return False
+    finally:
+        session.close()
