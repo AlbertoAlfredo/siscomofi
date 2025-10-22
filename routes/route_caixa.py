@@ -1,4 +1,5 @@
 from flask import render_template, request, Blueprint, redirect, url_for
+from models.lancamento import adicionar_lancamento
 
 caixa_bp = Blueprint(
     name="caixa_bp",
@@ -9,12 +10,12 @@ caixa_bp = Blueprint(
 
 
 @caixa_bp.route("/caixabanco", methods=["GET"])
-def caixa_banco():
+def get_lancamentos():
     return render_template("lancamentos_caixa_banco.html")
 
 
-@caixa_bp.route("/caixabanco/post", methods=["POST"])
-def caixa_banco_post():
+@caixa_bp.route("/caixabanco", methods=["POST"])
+def create_lancamento():
     lancamento = {
         "movimento_data_lancamento": request.form["data_lancamento"],
         "movimento_n_doc": request.form["n_doc"],
@@ -40,5 +41,6 @@ def caixa_banco_post():
         "outros_descricao_pagamento": request.form["outros_descricao_pagamento"],
         "outros_valor_pagamento": request.form["outros_valor_pagamento"],
     }
+    adicionar_lancamento(lancamento)
 
-    return redirect(url_for("caixa_bp_post"))
+    return redirect(url_for("get_lancamentos"))
