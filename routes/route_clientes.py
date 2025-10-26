@@ -30,6 +30,11 @@ class Clientes(Base):
     valor_honorario = Column(Integer)
     observacoes = Column(String(500))
 
+    def to_dict(self):
+        """Converte o objeto Cliente num dicionário."""
+        # Usa __table__.columns para obter dinamicamente todas as colunas
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 @cliente_bp.route("/clientes-cadastro", methods=['GET', 'POST'])
 def clientes_cadastro():
     if request.method == "POST":

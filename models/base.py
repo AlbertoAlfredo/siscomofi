@@ -25,9 +25,9 @@ def init_db():
     Base.metadata.create_all(engine)
     print("Tabelas verificadas/criadas.")
 
-def to_dict(self):
-    # Converte o objeto Cliente em um dicionário para fácil uso no front-end.
-    return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+# def to_dict(dados):
+#     # Converte o objeto Cliente em um dicionário para fácil uso no front-end.
+#     return {c.name: getattr(dados, c.name) for c in dados.__table__.columns}
 
 
 def add(classe, dados):
@@ -69,7 +69,7 @@ def update(classe, id, dados_update):
 def get_all(classe):
     session = Session()
     lancamento = session.query(classe).order_by(classe.id).all()
-    lancamento = to_dict(lancamento)
+    # lancamento = to_dict(lancamento)
     session.close()
     return [lancamento for i in classe]
 
@@ -85,16 +85,16 @@ def get_paginate(classe, page=1, per_page=10):
         .all()
     )
     session.close()
-    return [to_dict(classe) for cliente in clientes]
-
+    # return [to_dict(classe) for cliente in clientes]
+    return clientes
 
 def get_for_id(classe, id):
     # Busca um único cliente pelo seu ID.
     session = Session()
     dados = session.query(classe).filter_by(id=id).first()
     session.close()
-    return to_dict(dados) if dados else None
-
+    # return to_dict(dados) if dados else None
+    return dados if dados else None
 
 def count_total(classe):
     # Conta o número total de clientes para a paginação.
