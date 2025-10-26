@@ -1,8 +1,7 @@
-import webview
+# import webview
 from flask import Flask, render_template
 from routes import route_caixa, route_clientes
 from models.base import init_db
-from models.cliente import Cliente
 import os
 
 
@@ -19,14 +18,14 @@ app.register_blueprint(blueprint=route_caixa.caixa_bp)
 
 
 # Cria a janela do pywebview, passando o servidor Flask
-window = webview.create_window(
-    "SisCoMoFi - Sistema de Controle Financeiro",
-    app,
-    width=1200,
-    height=800,
-    confirm_close=True,
-    resizable=True,
-)
+# window = webview.create_window(
+#     "SisCoMoFi - Sistema de Controle Financeiro",
+#     app,
+#     width=1200,
+#     height=800,
+#     confirm_close=True,
+#     resizable=True,
+# )
 
 
 @app.route("/")

@@ -1,8 +1,8 @@
 import os
+
 from sqlalchemy import create_engine, Column, Integer, String, Float
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-import utils
+from sqlalchemy.orm import sessionmaker
 
 # Pega o caminho absoluto do diretório onde este arquivo está
 basedir = os.path.abspath(os.path.dirname(__file__))

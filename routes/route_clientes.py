@@ -1,6 +1,8 @@
 import math
 from flask import Flask, render_template, request, Blueprint, redirect, url_for
-import database
+from sqlalchemy import Column, Integer, String, Float
+import models.base as db
+from models.base import Base
 
 cliente_bp = Blueprint(
                         'cliente_bp',
@@ -8,6 +10,25 @@ cliente_bp = Blueprint(
                              static_folder='static',
                              template_folder='templates'
                              )
+
+class Clientes(Base):
+    __tablename__ = "clientes"
+
+    id = Column(Integer, primary_key=True)
+    nome_cliente = Column(String(100), nullable=False)
+    nome_propriedade = Column(String(100))
+    endereco = Column(String(150))
+    numero = Column(String(10))
+    bairro = Column(String(50))
+    cidade = Column(String(50))
+    uf = Column(String(2))
+    tipo_pessoa = Column(String(10))
+    cpf_cnpj = Column(String(18))
+    inscricao_estadual = Column(String(20))
+    telefone = Column(String(15))
+    celular = Column(String(15))
+    valor_honorario = Column(Integer)
+    observacoes = Column(String(500))
 
 @cliente_bp.route("/clientes-cadastro", methods=['GET', 'POST'])
 def clientes_cadastro():
@@ -29,10 +50,10 @@ def clientes_cadastro():
             "valor_honorario": request.form["valorhonorario"],
             "observacoes": request.form["observacoes"],
         }
-        database.adicionar_cliente(cliente)
+        db.add(Clientes, cliente)
         return render_template("clientes-cadastro.html")
     elif request.method == 'GET' and request.args.get('id'):
-        cliente = database.get_cliente_por_id(request.args.get('id'))
+        cliente = db.get_for_id(Clientes, request.args.get('id'))
         return render_template("clientes-cadastro.html", cliente = cliente)
     else:
         return render_template("clientes-cadastro.html")
@@ -56,21 +77,21 @@ def clientes_atualiza():
         "valor_honorario": request.form.get("valorhonorario"),
         "observacoes": request.form.get("observacoes"),
     }
-    database.atualizar_cliente(cliente['id'], cliente)
-    return redirect(url_for('clientes_lista'))
+    db.update(Clientes, cliente['id'], cliente)
+    return redirect(url_for('cliente_bp.clientes_lista'))
 
 @cliente_bp.route("/cliente_apagar", methods=['GET'])
 def cliente_apagar():
     cliente_id = request.args.get('id')
-    database.deletar_cliente(cliente_id)
-    return redirect(url_for('clientes_lista'))
+    db.delete(Clientes, cliente_id)
+    return redirect(url_for('cliente_bp.clientes_lista'))
     
 @cliente_bp.route("/clientes_lista", methods=['GET'])
 def clientes_lista():
     page = request.args.get('page', 1, type=int)
     ITENS_POR_PAGINA = 10
-    clientes_da_pagina = database.get_clientes_paginados(page, ITENS_POR_PAGINA)
-    total_clientes = database.count_total_clientes()
+    clientes_da_pagina = db.get_paginate(Clientes, page, ITENS_POR_PAGINA)
+    total_clientes = db.count_total(Clientes)
     total_paginas = math.ceil(total_clientes / ITENS_POR_PAGINA)
 
     return render_template("clientes-lista.html",
@@ -78,5 +99,3 @@ def clientes_lista():
                            pagina_atual = page,
                            total_paginas = total_paginas
                            )
-    # clientes_lista = database.get_clientes()
-    # return render_template("clientes-lista.html", clientes = clientes_lista)

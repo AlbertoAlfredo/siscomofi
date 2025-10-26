@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, Date
 from .base import Base, Session  # Importa do nosso arquivo base.py
 
-session = Session()
+
 
 
 class Lancamentos(Base):
@@ -34,6 +34,7 @@ class Lancamentos(Base):
 
 
 def adicionar_lancamento(lancamento):
+    session = Session()
     try:
         novo_lancamento = Lancamentos(**lancamento)
         session.add(novo_lancamento)
@@ -48,6 +49,7 @@ def adicionar_lancamento(lancamento):
 
 
 def atualizar_lancamento(id_dados, dados):
+    session = Session()
     try:
         lancamento = session.query(Lancamentos).filter_by(id=id_dados).first()
         if lancamento:
@@ -65,11 +67,13 @@ def atualizar_lancamento(id_dados, dados):
 
 
 def get_lancamentos():
+    session = Session()
     lancamento = session.query(Lancamentos).order_by(Lancamentos.id).all()
     session.close()
     return [lancamento.to_dict() for i in lancamento]
 
 def deletar_lancamento(id_dados):
+    session = Session()
     try:
         lancamento = session.query(Lancamentos).filter_by(id=id_dados).first()
         if lancamento:

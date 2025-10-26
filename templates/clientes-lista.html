@@ -3,34 +3,41 @@
 {% block content %}
 
 
-
 <div class="container">
     <ul class="list-group">
-    
+
         {% for cliente in clientes %}
         <hr>
-        <li id="cliente--{{cliente.id}}" style="text-align: justify"> Nome: {{cliente.nome_cliente}} - CPF/CNPJ: {{ cliente.cpf_cnpj }} 
-        <a href="{{url_for('cliente_bp.clientes_cadastro', id=cliente.id)}}"><button type="button" class="btn btn-primary">Editar</button></a> 
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalApagar">Apagar</button>
-        <div class="modal fade" id="modalApagar" tabindex="-1" aria-labelledby="modalApagarLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalApagarLabel">Tem certeza?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                Você quer mesmo apagar?
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Voltar</button>
-                <a href="{{url_for('cliente_bp.cliente_apagar', id=cliente.id)}}"><button type="button" class="btn btn-danger">Apagar</button></a>
-              </div>
+        <p>{{ cliente }}</p>
+        <li id="cliente--{{cliente.id}}" style="text-align: justify"> Nome: {{cliente.nome_cliente}} - CPF/CNPJ: {{
+            cliente.cpf_cnpj }}
+            <a href="{{url_for('cliente_bp.clientes_cadastro', id=cliente.id)}}">
+                <button class="btn btn-primary" type="button">Editar</button>
+            </a>
+            <button class="btn btn-danger" data-bs-target="#modalApagar" data-bs-toggle="modal" type="button">Apagar
+            </button>
+            <div aria-hidden="true" aria-labelledby="modalApagarLabel" class="modal fade" id="modalApagar"
+                 tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalApagarLabel">Tem certeza?</h1>
+                            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                        </div>
+                        <div class="modal-body">
+                            Você quer mesmo apagar?
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" data-bs-dismiss="modal" type="button">Voltar</button>
+                            <a href="{{url_for('cliente_bp.cliente_apagar', id=cliente.id)}}">
+                                <button class="btn btn-danger" type="button">Apagar</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
         </li>
-        
+
         {% endfor %}
 
     </ul>
@@ -38,29 +45,29 @@
     <hr style="height: 60px">
 
     <nav aria-label="Navegação das páginas">
-      <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center">
 
-        <!-- Botão "Anterior" -->
-        <li class="page-item {% if pagina_atual == 1 %}disabled{% endif %}">
-          <a class="page-link" href="{{ url_for('cliente_bp.clientes_lista', page=pagina_atual-1) }}">Anterior</a>
-        </li>
+            <!-- Botão "Anterior" -->
+            <li class="page-item {% if pagina_atual == 1 %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('cliente_bp.clientes_lista', page=pagina_atual-1) }}">Anterior</a>
+            </li>
 
-        <!-- Links para cada página -->
-        {% for p in range(1, total_paginas + 1) %}
+            <!-- Links para cada página -->
+            {% for p in range(1, total_paginas + 1) %}
             <li class="page-item {% if p == pagina_atual %}active{% endif %}">
                 <a class="page-link" href="{{ url_for('cliente_bp.clientes_lista', page=p) }}">{{ p }}</a>
             </li>
-        {% endfor %}
+            {% endfor %}
 
-        <!-- Botão "Próximo" -->
-        <li class="page-item {% if pagina_atual == total_paginas %}disabled{% endif %}">
-          <a class="page-link" href="{{ url_for('cliente_bp.clientes_lista', page=pagina_atual+1) }}">Próximo</a>
-        </li>
+            <!-- Botão "Próximo" -->
+            <li class="page-item {% if pagina_atual == total_paginas %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('cliente_bp.clientes_lista', page=pagina_atual+1) }}">Próximo</a>
+            </li>
 
-      </ul>
+        </ul>
     </nav>
     <hr style="height: 60px">
-</div> 
+</div>
 
 
 {% endblock %}
