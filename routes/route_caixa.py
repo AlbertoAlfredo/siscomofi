@@ -137,6 +137,7 @@ def get_lancamentos_agenfa():
     if request.method == "POST":
 
         lancamento_agenfa = {
+            "id_lancamento": lancamento.id,
             "data_pagamento": datetime.strptime(request.form["data_pagamento"], '%Y-%m-%d').date(),
             "n_cheque": request.form["n_cheque"],
             "descricao_pagamento": request.form["descricao_pagamento"],
@@ -146,7 +147,7 @@ def get_lancamentos_agenfa():
         base.add(Agenfa, lancamento_agenfa)
     if request.args.get("apagar"):
         base.delete(Agenfa, request.args.get("apagar"))
-    agenfa = base.get_all(Agenfa)
+    agenfa = base.get_all_filter(Agenfa, id_lancamento=id)
 
     return render_template("agenfa.html", movimento=lancamento, credito=credito, agenfa=agenfa)
 
@@ -169,6 +170,7 @@ def get_lancamentos_iagro():
     if request.method == "POST":
 
         lancamento_iagro = {
+            "id_lancamento": lancamento.id,
             "data_pagamento": datetime.strptime(request.form["data_pagamento"], '%Y-%m-%d').date(),
             "n_cheque": request.form["n_cheque"],
             "descricao_pagamento": request.form["descricao_pagamento"],
@@ -177,7 +179,7 @@ def get_lancamentos_iagro():
         base.add(Iagro, lancamento_iagro)
     if request.args.get("apagar"):
         base.delete(Iagro, request.args.get("apagar"))
-    iagro = base.get_all(Iagro)
+    iagro = base.get_all_filter(Iagro, id_lancamento = id)
 
     return render_template("iagro.html", movimento=lancamento, credito=credito, iagro=iagro)
 
@@ -200,6 +202,7 @@ def get_lancamentos_pagamentos():
     if request.method == "POST":
 
         lancamento_pagamentos = {
+            "id_lancamento": lancamento.id,
             "data_pagamento": datetime.strptime(request.form["data_pagamento"], '%Y-%m-%d').date(),
             "n_cheque": request.form["n_cheque"],
             "descricao_pagamento": request.form["descricao_pagamento"],
@@ -208,8 +211,7 @@ def get_lancamentos_pagamentos():
         base.add(Pagamentos, lancamento_pagamentos)
     if request.args.get("apagar"):
         base.delete(Pagamentos, request.args.get("apagar"))
-    pagamentos = base.get_all(Pagamentos)
-
+    pagamentos = base.get_all_filter(Pagamentos, id_lancamento=id)
     return render_template("pagamentos.html", movimento=lancamento, credito=credito, pagamentos=pagamentos)
 
 
@@ -233,6 +235,7 @@ def get_lancamentos_outros():
     if request.method == "POST":
 
         lancamento_outros = {
+            "id_lancamento": lancamento.id,
             "data_pagamento": datetime.strptime(request.form["data_pagamento"], '%Y-%m-%d').date(),
             "n_cheque": request.form["n_cheque"],
             "descricao_pagamento": request.form["descricao_pagamento"],
@@ -241,6 +244,6 @@ def get_lancamentos_outros():
         base.add(Outros, lancamento_outros)
     if request.args.get("apagar"):
         base.delete(Outros, request.args.get("apagar"))
-    outros = base.get_all(Outros)
+    outros = base.get_all_filter(Outros, id_lancamento=id)
 
     return render_template("outros.html", movimento=lancamento, credito=credito, outros=outros)

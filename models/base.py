@@ -74,6 +74,13 @@ def get_all(classe):
     session.close()
     return lancamento
 
+def get_all_filter(classe, **filters):
+    session = Session()
+    lancamento = session.query(classe).order_by(classe.id).filter_by(**filters).all()
+    # lancamento = to_dict(lancamento)
+    session.close()
+    return lancamento
+
 def get_paginate(classe, order_by , page=1, per_page=10):
     # Busca uma 'página' de clientes do banco de dados.
     session = Session()
