@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, redirect
 from routes import route_caixa, route_clientes
 from models.base import init_db
+from utils import format_phone
 import os, webview
 
 
@@ -11,6 +12,9 @@ app = Flask(
     static_folder=os.path.join(basedir, "static"),
     template_folder=os.path.join(basedir, "templates"),
 )
+
+app.jinja_env.filters['phone_format'] = format_phone
+
 # Cria a janela do pywebview, passando o servidor Flask
 window = webview.create_window(
     'SisCoMoFi - Sistema de Controle Financeiro',
@@ -46,9 +50,6 @@ if __name__ == "__main__":
     init_db()
 
     # Inicia o programa
-    webview.start(
-        debug=False,
-        icon="static/logo.png"
-    )
+    # webview.start(debug=False, icon="static/logo.png")
 
-    # app.run(debug=True)
+    app.run(debug=True)

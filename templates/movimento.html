@@ -94,7 +94,7 @@
                         {{ form.input_field(name="n_doc", type='number',
                             label='Número do Documento',
                             value=movimento.n_doc|int if movimento else '' ,
-                            placeholder='', required='false', class='') }}
+                            placeholder='000', required='false', class='') }}
                     </div>
                 </div>
                 <div class="row">
@@ -111,7 +111,7 @@
                         {{ form.input_field(name="credito_deposito",
                             type='money', label='Crédito/Depósito R$:',
                             value=movimento.credito_deposito if movimento else ''
-                            , placeholder='', required='false', class='') }}
+                            , placeholder='0,00', required='false', class='') }}
                     </div>
                     <div class="col">
                         {{ form.input_field(name="debito_saque", type='money',

@@ -76,14 +76,18 @@
                             type='number', label='N° do Cheque', placeholder='', required='false', class='') }}
                     </div>
                     <div class="col">
+                        {{ form.input_field(name="valor_pagamento",
+                            type='money', label='Valor Pgto', placeholder='', required='false', class='') }}
+
+                    </div>
+
+                    <div class="row">
+                    <div class="col">
                         {{ form.input_field(name="descricao_pagamento",
                             type='text', label='Descrição do pgto', placeholder='', required='false',
                             class='') }}
                     </div>
-                    <div class="col">
-                        {{ form.input_field(name="valor_pagamento",
-                            type='money', label='Valor Pgto', placeholder='', required='false', class='') }}
-                    </div>
+                        </div>
                 </div>
                 <div class="col">
                     <button class="btn btn-success" type="submit">

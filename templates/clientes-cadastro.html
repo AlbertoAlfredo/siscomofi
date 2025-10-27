@@ -118,28 +118,25 @@
         {% endif %}
     </div>
 
-    {{ form.input_field(name="cpfcnpj", type='text', label='CPF/CNPJ', value=cliente.cpfcnpj if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="cpf_cnpj", type='text', label='CPF/CNPJ', value=cliente.cpf_cnpj if cliente else "" , placeholder='', required='false', class='') }}
 
-    {{ form.input_field(name="iestadual", type='text', label='Inscrição Estadual', value=cliente.iestadual if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="inscricao_estadual", type='text', label='Inscrição Estadual', value=cliente.inscricao_estadual if cliente else "" , placeholder='', required='false', class='') }}
 
     <hr>
     <h3>Contato</h3>
 
-    {{ form.input_field(name="fone", type='tel', label='Telefone', value=cliente.fone if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="telefone", type='tel', label='Telefone', value=cliente.telefone if cliente else "" , placeholder='', required='false', class='') }}
 
-    {{ form.input_field(name="celuLar", type='tel', label='Celular', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="celular", type='tel', label='Celular', value=cliente.celular if cliente else "" , placeholder='', required='false', class='') }}
     <hr>
     <h3>Financeiro e Outros</h3>
     <div class="input-group mb-3">
-        <span class="input-group-text celular" id="inputGroup-sizing-default">Valor do Honorário</span>
-        <input name="valorhonorario" type="number" step="0.01" min="0" class="form-control"
-               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-               value="{{ cliente.valor_honorario if cliente else "" }}">
+        {{ form.input_field(name="valorhonorario", type='money', label='Valor do Honorário', value=cliente.valor_honorario if cliente else "" , placeholder='', required='false', class='') }}
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Observações</label>
         <textarea name="observacoes" class="form-control" id="exampleFormControlTextarea1"
-                  rows="10">{{ cliente.observacoes.strip() if cliente else "" }}</textarea>
+                  rows="10" cols="80">{{ cliente.observacoes.strip() if cliente else "" }}</textarea>
         <button type="submit" class="btn btn-success">Salvar</button>
         <a href="/clientes-cadastro">
             <button type="button" class="btn btn-danger">Limpar</button>

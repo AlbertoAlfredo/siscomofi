@@ -6,7 +6,10 @@
         {% endif %}
         {% if type == "money" %}
             <input name="{{ name }}" type="number" min="0.01" step="0.01" class="form-control {{ class }}"
-                   value="{{ value|int/100 }}" placeholder="{{ placeholder }}" required="{{ required }}">
+                   value="{{ "{:.2f}".format(value|int/100) if value else '' }}" placeholder="0,00" required="{{ required }}">
+        {% elif type == "tel" %}
+            <input name="{{ name }}" type="tel" class="form-control {{ class }}"
+                   value="{{ value | phone_format if value else "" }}" placeholder="(00)0000-0000" required="{{ required }}">
         {% else %}
             <input name="{{ name }}" type="{{ type }}" class="form-control {{ class }}" value="{{ value }}"
                    placeholder="{{ placeholder }}" required="{{ required }}">
