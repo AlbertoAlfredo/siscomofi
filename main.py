@@ -37,8 +37,8 @@ app.register_blueprint(blueprint=route_caixa.caixa_bp)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
-    # return redirect(url_for('cliente_bp.clientes_lista'))
+    # return render_template("index.html")
+    return redirect(url_for('cliente_bp.clientes_lista'))
 
 
 if __name__ == "__main__":

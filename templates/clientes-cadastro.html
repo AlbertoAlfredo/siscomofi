@@ -125,11 +125,7 @@
     <h3>Contato</h3>
 
     {{ form.input_field(name="fone", type='tel', label='Telefone', value=cliente.fone if cliente else "" , placeholder='', required='false', class='') }}
-    <div class="input-group mb-3">
-        <span class="input-group-text celular" id="inputGroup-sizing-default">Celular</span>
-        <input name="celular" type="tel" class="form-control" aria-label="Sizing example input"
-               aria-describedby="inputGroup-sizing-default" value="{{ cliente.celular if cliente else "" }}">
-    </div>
+
     {{ form.input_field(name="celuLar", type='tel', label='Celular', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
     <hr>
     <h3>Financeiro e Outros</h3>
