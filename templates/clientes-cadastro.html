@@ -3,6 +3,7 @@
 
 {% block content %}
 
+
     {% if cliente %}
 
         <form class="container" method="post" action="{{ url_for('cliente_bp.clientes_atualiza') }}">
@@ -16,7 +17,7 @@
 
 
 
-
+<h1>Clientes Cadastro</h1>
 <hr>
 <h3>Dados principais</h3>
 {{ form.input_field(name="nome", type='text', label='Nome', value=cliente.nome_cliente if cliente else '' , placeholder='', required='false', class='') }}
