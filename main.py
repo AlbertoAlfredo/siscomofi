@@ -1,5 +1,6 @@
 # import webview
-from flask import Flask, render_template
+from bottle import redirect
+from flask import Flask, render_template, url_for
 from routes import route_caixa, route_clientes
 from models.base import init_db
 import os
@@ -31,7 +32,7 @@ app.register_blueprint(blueprint=route_caixa.caixa_bp)
 @app.route("/")
 def home():
     return render_template("index.html")
-
+    # return redirect(url_for('cliente_bp.clientes_lista'))
 
 if __name__ == "__main__":
     # Garante que o banco de dados e as tabelas existam

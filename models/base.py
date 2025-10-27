@@ -34,12 +34,13 @@ def add(classe, dados):
     # Adiciona um novo cliente ao banco de dados.
     session = Session()
     try:
-        novo_cliente = classe(
+        novo = classe(
             **dados
         )  # Cria um Cliente a partir do dicionário
-        session.add(novo_cliente)
+        session.add(novo)
         session.commit()
-        return novo_cliente.id
+        print(f"Lancamento adicionado com sucesso. ID: {novo.id}")
+        return novo.id
     except Exception as e:
         session.rollback()
         print(f"Erro ao adicionar: {e}")
@@ -52,10 +53,10 @@ def update(classe, id, dados_update):
     # Atualiza os dados de um cliente.
     session = Session()
     try:
-        cliente = session.query(classe).filter_by(id=id).first()
-        if cliente:
+        dados = session.query(classe).filter_by(id=id).first()
+        if dados:
             for key, value in dados_update.items():
-                setattr(cliente, key, value)
+                setattr(dados, key, value)
             session.commit()
             return True
         return False
@@ -71,22 +72,16 @@ def get_all(classe):
     lancamento = session.query(classe).order_by(classe.id).all()
     # lancamento = to_dict(lancamento)
     session.close()
-    return [lancamento for i in classe]
+    return lancamento
 
-def get_paginate(classe, page=1, per_page=10):
+def get_paginate(classe, order_by , page=1, per_page=10):
     # Busca uma 'página' de clientes do banco de dados.
     session = Session()
     offset = (page - 1) * per_page
-    clientes = (
-        session.query(classe)
-        .order_by(classe.nome_cliente)
-        .limit(per_page)
-        .offset(offset)
-        .all()
-    )
+    lancamentos = session.query(classe).order_by(order_by).limit(per_page).offset(offset).all()
     session.close()
     # return [to_dict(classe) for cliente in clientes]
-    return clientes
+    return lancamentos
 
 def get_for_id(classe, id):
     # Busca um único cliente pelo seu ID.

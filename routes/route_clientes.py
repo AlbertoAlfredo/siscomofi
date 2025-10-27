@@ -95,7 +95,7 @@ def cliente_apagar():
 def clientes_lista():
     page = request.args.get('page', 1, type=int)
     ITENS_POR_PAGINA = 10
-    clientes_da_pagina = db.get_paginate(Clientes, page, ITENS_POR_PAGINA)
+    clientes_da_pagina = db.get_paginate(Clientes, Clientes.nome_cliente, page, ITENS_POR_PAGINA)
     total_clientes = db.count_total(Clientes)
     total_paginas = math.ceil(total_clientes / ITENS_POR_PAGINA)
 

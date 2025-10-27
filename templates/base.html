@@ -4,100 +4,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='/node_modules/bootstrap/dist/css/bootstrap.css')}}">
-    <link rel="icon" type="image/png" sizes="40x40" href="{{url_for('static', filename='logo.png')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/node_modules/bootstrap/dist/css/bootstrap.css') }}">
+    <link rel="icon" type="image/png" sizes="40x40" href="{{ url_for('static', filename='logo.png') }}">
     <title>SISCOMOFI</title>
 </head>
 
 <body class="container-fluid">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">SISCOMOFI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">SISCOMOFI</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Início</a>
-                    </li>
-                    
-                    <!-- Inicio dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Arquivo
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Clientes</a></li>
-                            <li><a class="dropdown-item" href="#">02</a></li>
-                            <li><a class="dropdown-item" href="#">03</a></li>
-                        </ul>
-                    </li>
-                    <!-- fim dropdown -->
-                     <!-- Inicio dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Movimentação
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/caixabanco">Lançamento Caixa/Banco</a></li>
-                            <li><a class="dropdown-item" href="#">Lançar Movimentos Receita/Despesas</a></li>
-                            <li><a class="dropdown-item" href="#">Lançar Honorário</a></li>
-                        </ul>
-                    </li>
-                    <!-- fim dropdown -->
-                     <!-- Inicio dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Clientes
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/clientes-cadastro">Cadastro</a></li>
-                            <li><a class="dropdown-item" href="/clientes_lista">Listar</a></li>
-                        </ul>
-                    </li>
-                    <!-- fim dropdown -->
-                     <!-- Inicio dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Relatórios
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Relatório 1</a></li>
-                            <li><a class="dropdown-item" href="#">Relatório 2</a></li>
-                            <li><a class="dropdown-item" href="#">Relatório 3</a></li>
-                        </ul>
-                    </li>
-                    <!-- fim dropdown -->
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Início</a>
+                </li>
+
+                <!-- Inicio dropdown -->
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"#}
+{#                       aria-expanded="false">#}
+{#                        Arquivo#}
+{#                    </a>#}
+{#                    <ul class="dropdown-menu">#}
+{#                        <li><a class="dropdown-item" href="#">Clientes</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">02</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">03</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Movimentação
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/caixabanco">Criar Lançamento Caixa/Banco</a></li>
+                        <li><a class="dropdown-item" href="/caixabanco/listar">Listar Lançamentos Caixa/Banco</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Clientes
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/clientes-cadastro">Cadastro</a></li>
+                        <li><a class="dropdown-item" href="/clientes_lista">Listar</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Relatórios
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Relatório 1</a></li>
+                        <li><a class="dropdown-item" href="#">Relatório 2</a></li>
+                        <li><a class="dropdown-item" href="#">Relatório 3</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
 
 
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                    </li>
-                </ul>
-            </div>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div style="height: 60px"></div>
+<div style="height: 60px"></div>
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
-    <div style="height: 60px"></div>
+<div style="height: 60px"></div>
 </body>
-<script src="{{url_for('static', filename='/node_modules/bootstrap/dist/js/bootstrap.bundle.js')}}"></script>
-<script src="{{url_for('static', filename='phone-mask.js')}}"></script>
+<script src="{{ url_for('static', filename='/node_modules/bootstrap/dist/js/bootstrap.bundle.js') }}"></script>
+<script src="{{ url_for('static', filename='phone-mask.js') }}"></script>
 <style>
-      body {
+    body {
         -webkit-user-select: text; /* Para compatibilidade com o motor do Chrome/Safari */
         -ms-user-select: text; /* Para compatibilidade com o motor da Microsoft */
         user-select: text; /* O padrão */
-      }
+    }
 </style>
 </html>

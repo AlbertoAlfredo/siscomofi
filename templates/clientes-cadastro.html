@@ -3,42 +3,41 @@
 
 {% block content %}
 
-{% if cliente %}
-    
-    <form class="container" method="post" action="{{url_for('cliente_bp.clientes_atualiza')}}">
-    <div class="input-group mb-3"  style="display: none;">
-        <span class="input-group-text" id="inputGroup-sizing-default">Id interno do cliente</span>
-        <input name="id" type="text" class="form-control" value="{{ cliente.id }}">
-    </div>
-{% else %}
-    <form class="container" method="post" action="{{url_for('cliente_bp.clientes_cadastro')}}">
-{% endif %}
+    {% if cliente %}
+
+        <form class="container" method="post" action="{{ url_for('cliente_bp.clientes_atualiza') }}">
+        <div class="input-group mb-3" style="display: none;">
+            <span class="input-group-text" id="inputGroup-sizing-default">Id interno do cliente</span>
+            <input name="id" type="text" class="form-control" value="{{ cliente.id }}">
+        </div>
+    {% else %}
+        <form class="container" method="post" action="{{ url_for('cliente_bp.clientes_cadastro') }}">
+    {% endif %}
 
 
 
 
-    <hr>
-    <h3>Dados principais</h3>
-    {{ form.input_field(name="nome", type='text', label='Nome', value=cliente.nome_cliente if cliente else '' , placeholder='', required='false', class='') }}
+<hr>
+<h3>Dados principais</h3>
+{{ form.input_field(name="nome", type='text', label='Nome', value=cliente.nome_cliente if cliente else '' , placeholder='', required='false', class='') }}
 
-    {{ form.input_field(name="npropriedade", type='text', label='Nome da propriedade', value=cliente.nome_propriedade if cliente else '' , placeholder='', required='false', class='') }}
-    <hr>
-    <h3>Endereço</h3>
+{{ form.input_field(name="npropriedade", type='text', label='Nome da propriedade', value=cliente.nome_propriedade if cliente else '' , placeholder='', required='false', class='') }}
+<hr>
+<h3>Endereço</h3>
 
-    {{ form.input_field(name="endereco", type='text', label='Endereço', value=cliente.endereco if cliente else "" , placeholder='', required='false', class='') }}
-    <div class="input-group mb-3">
+{{ form.input_field(name="endereco", type='text', label='Endereço', value=cliente.endereco if cliente else "" , placeholder='', required='false', class='') }}
+<div class="input-group mb-3">
 
-        {{ form.input_field(name="numero", type='text', label='Número', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="numero", type='text', label='Número', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
 
-        {{ form.input_field(name="bairro", type='text', label='Bairro', value=cliente.bairro if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="bairro", type='text', label='Bairro', value=cliente.bairro if cliente else "" , placeholder='', required='false', class='') }}
 
     <div class="input-group mb-3">
         {{ form.input_field(name="cidade", type='text', label='Cidade', value=cliente.cidade if cliente else "" , placeholder='', required='false', class='') }}
         <label class="input-group-text" id="inputGroup-sizing-default">Estado:</label>
 
 
-        {%
-        set ufs = {
+        {% set ufs = {
         'AC': 'Acre',
         'AL': 'Alagoas',
         'AP': 'Amapá',
@@ -66,27 +65,26 @@
         'SP': 'São Paulo',
         'SE': 'Sergipe',
         'TO': 'Tocantins'
-        }
-        %}
+        } %}
 
         {% if cliente %}
-        <select class="form-select" id="selectUf" name="uf" required>
+            <select class="form-select" id="selectUf" name="uf" required>
             {% for uf_sigla, uf_nome in ufs.items() %}
                 {% if uf_sigla == cliente['uf'] %}
-                <option selected value="{{ uf_sigla }}">{{ uf_nome }}</option>
+                    <option selected value="{{ uf_sigla }}">{{ uf_nome }}</option>
                 {% else %}
-                <option value="{{ uf_sigla }}">{{ uf_nome }}</option>
+                    <option value="{{ uf_sigla }}">{{ uf_nome }}</option>
                 {% endif %}
             {% endfor %}
         {% else %}
-        <select class="form-select" id="selectUf" name="uf" required>
+            <select class="form-select" id="selectUf" name="uf" required>
             <option selected disabled value="">Selecione um estado...</option>
             {% for uf_sigla, uf_nome in ufs.items() %}
                 <option value="{{ uf_sigla }}">{{ uf_nome }}</option>
             {% endfor %}
-        {% endif %} 
-        
-        
+        {% endif %}
+
+
 
 
         </select>
@@ -98,24 +96,24 @@
 
         {% if cliente %}
             {% if cliente.tipo_pessoa == 'F' %}
-            <select class="form-select" id="selectPessoa" name="tipopessoa" required>
-                <option selected value="F">Física</option>
-                <option value="J">Jurídica</option>
-            </select>
+                <select class="form-select" id="selectPessoa" name="tipopessoa" required>
+                    <option selected value="F">Física</option>
+                    <option value="J">Jurídica</option>
+                </select>
             {% else %}
-            <select class="form-select" id="selectPessoa" name="tipopessoa" required>
-                <option value="F">Física</option>
-                <option selected value="J">Jurídica</option>
-            </select>
+                <select class="form-select" id="selectPessoa" name="tipopessoa" required>
+                    <option value="F">Física</option>
+                    <option selected value="J">Jurídica</option>
+                </select>
 
             {% endif %}
         {% else %}
-        <select class="form-select" id="selectPessoa" name="tipopessoa" required>
-            <option selected disabled value="">Selecione um tipo...</option>
-            <option value="F">Física</option>
-            <option value="J">Jurídica</option>
+            <select class="form-select" id="selectPessoa" name="tipopessoa" required>
+                <option selected disabled value="">Selecione um tipo...</option>
+                <option value="F">Física</option>
+                <option value="J">Jurídica</option>
 
-        </select>
+            </select>
         {% endif %}
     </div>
 
@@ -130,7 +128,7 @@
     <div class="input-group mb-3">
         <span class="input-group-text celular" id="inputGroup-sizing-default">Celular</span>
         <input name="celular" type="tel" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" value="{{cliente.celular if cliente else ""}}">
+               aria-describedby="inputGroup-sizing-default" value="{{ cliente.celular if cliente else "" }}">
     </div>
     {{ form.input_field(name="celuLar", type='tel', label='Celular', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
     <hr>
@@ -138,16 +136,20 @@
     <div class="input-group mb-3">
         <span class="input-group-text celular" id="inputGroup-sizing-default">Valor do Honorário</span>
         <input name="valorhonorario" type="number" step="0.01" min="0" class="form-control"
-            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="{{cliente.valor_honorario if cliente else ""}}">
+               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+               value="{{ cliente.valor_honorario if cliente else "" }}">
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Observações</label>
-        <textarea name="observacoes" class="form-control" id="exampleFormControlTextarea1" rows="3">{{cliente.observacoes.strip() if cliente else ""}}</textarea>
+        <textarea name="observacoes" class="form-control" id="exampleFormControlTextarea1"
+                  rows="10">{{ cliente.observacoes.strip() if cliente else "" }}</textarea>
         <button type="submit" class="btn btn-success">Salvar</button>
-    <a href="/clientes-cadastro"><button type="button" class="btn btn-danger">Limpar</button></a>
+        <a href="/clientes-cadastro">
+            <button type="button" class="btn btn-danger">Limpar</button>
+        </a>
     </div>
 
-    
+
 </form>
 
 
