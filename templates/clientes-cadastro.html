@@ -20,21 +20,21 @@
 <h1>Clientes Cadastro</h1>
 <hr>
 <h3>Dados principais</h3>
-{{ form.input_field(name="nome", type='text', label='Nome', value=cliente.nome_cliente if cliente else '' , placeholder='', required='false', class='') }}
+{{ form.input_field(name="nome", type='text', label='Nome', value=cliente.nome_cliente if cliente else '' , placeholder='', required=True, class='') }}
 
-{{ form.input_field(name="npropriedade", type='text', label='Nome da propriedade', value=cliente.nome_propriedade if cliente else '' , placeholder='', required='false', class='') }}
+{{ form.input_field(name="npropriedade", type='text', label='Nome da propriedade', value=cliente.nome_propriedade if cliente else '' , placeholder='', required=False, class='') }}
 <hr>
 <h3>Endereço</h3>
 
-{{ form.input_field(name="endereco", type='text', label='Endereço', value=cliente.endereco if cliente else "" , placeholder='', required='false', class='') }}
+{{ form.input_field(name="endereco", type='text', label='Endereço', value=cliente.endereco if cliente else "" , placeholder='', required=False, class='') }}
 <div class="input-group mb-3">
 
-    {{ form.input_field(name="numero", type='text', label='Número', value=cliente.numero if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="numero", type='text', label='Número', value=cliente.numero if cliente else "" , placeholder='', required=False, class='') }}
 
-    {{ form.input_field(name="bairro", type='text', label='Bairro', value=cliente.bairro if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="bairro", type='text', label='Bairro', value=cliente.bairro if cliente else "" , placeholder='', required=False, class='') }}
 
     <div class="input-group mb-3">
-        {{ form.input_field(name="cidade", type='text', label='Cidade', value=cliente.cidade if cliente else "" , placeholder='', required='false', class='') }}
+        {{ form.input_field(name="cidade", type='text', label='Cidade', value=cliente.cidade if cliente else "" , placeholder='', required=False, class='') }}
         <label class="input-group-text" id="inputGroup-sizing-default">Estado:</label>
 
 
@@ -118,20 +118,20 @@
         {% endif %}
     </div>
 
-    {{ form.input_field(name="cpf_cnpj", type='text', label='CPF/CNPJ', value=cliente.cpf_cnpj if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="cpf_cnpj", type='text', label='CPF/CNPJ', value=cliente.cpf_cnpj if cliente else "" , placeholder='', required=False, class='') }}
 
-    {{ form.input_field(name="inscricao_estadual", type='text', label='Inscrição Estadual', value=cliente.inscricao_estadual if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="inscricao_estadual", type='text', label='Inscrição Estadual', value=cliente.inscricao_estadual if cliente else "" , placeholder='', required=False, class='') }}
 
     <hr>
     <h3>Contato</h3>
 
-    {{ form.input_field(name="telefone", type='tel', label='Telefone', value=cliente.telefone if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="telefone", type='tel', label='Telefone', value=cliente.telefone if cliente else "" , placeholder='', required=False, class='') }}
 
-    {{ form.input_field(name="celular", type='tel', label='Celular', value=cliente.celular if cliente else "" , placeholder='', required='false', class='') }}
+    {{ form.input_field(name="celular", type='tel', label='Celular', value=cliente.celular if cliente else "" , placeholder='', required=False, class='') }}
     <hr>
     <h3>Financeiro e Outros</h3>
     <div class="input-group mb-3">
-        {{ form.input_field(name="valorhonorario", type='money', label='Valor do Honorário', value=cliente.valor_honorario if cliente else "" , placeholder='', required='false', class='') }}
+        {{ form.input_field(name="valorhonorario", type='money', label='Valor do Honorário', value=cliente.valor_honorario if cliente else "" , placeholder='', required=False, class='') }}
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Observações</label>

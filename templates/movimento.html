@@ -80,21 +80,21 @@
                         {{ form.input_field(name="data_lancamento", type='date',
                             label='Data de lançamento',
                             value=movimento.data_lancamento.strftime('%Y-%m-%d') if movimento else '' ,
-                            placeholder='', required='false', class='') }}
+                            placeholder='', required=True, class='') }}
                     </div>
                     {% if movimento %}
                     <div style="display: none" >
                         {{ form.input_field(name="id", type='text',
                             label='id',
                             value=id if movimento else '' ,
-                            placeholder='', required='false', class='') }}
+                            placeholder='', required=False, class='') }}
                     </div>
                     {% endif %}
                     <div class="col">
                         {{ form.input_field(name="n_doc", type='number',
                             label='Número do Documento',
                             value=movimento.n_doc|int if movimento else '' ,
-                            placeholder='000', required='false', class='') }}
+                            placeholder='000', required=False, class='') }}
                     </div>
                 </div>
                 <div class="row">
@@ -102,7 +102,7 @@
                         {{ form.input_field(name="historico_lancamento", type='text',
                             label='Histórico de Lançamento',
                             value=movimento.historico_lancamento if movimento else '' ,
-                            placeholder='', required='false', class='') }}
+                            placeholder='', required=False, class='') }}
                     </div>
                 </div>
                 <div class="row">
@@ -111,13 +111,13 @@
                         {{ form.input_field(name="credito_deposito",
                             type='money', label='Crédito/Depósito R$:',
                             value=movimento.credito_deposito if movimento else ''
-                            , placeholder='0,00', required='false', class='') }}
+                            , placeholder='0,00', required=False, class='') }}
                     </div>
                     <div class="col">
                         {{ form.input_field(name="debito_saque", type='money',
                             label='Débito/Saque R$:', value=movimento.debito_saque
                             if movimento else '' , placeholder='',
-                            required='false', class='') }}
+                            required=False, class='') }}
                     </div>
                 </div>
                 <div class="row">
@@ -125,13 +125,13 @@
                         {{ form.input_field(name="deposito_bloqueado",
                             type='money', label='Depósito bloqueado R$:',
                             value=movimento.deposito_bloqueado if movimento else
-                            '' , placeholder='', required='false', class='') }}
+                            '' , placeholder='', required=False, class='') }}
                     </div>
                     <div class="col">
                         {{ form.input_field(name="taxa_servico_mensal",
                             type='money', label='Taxa de serviços mensais R$:',
                             value=movimento.taxa_servico_mensal if movimento else
-                            '' , placeholder='', required='false', class='') }}
+                            '' , placeholder='', required=False, class='') }}
                     </div>
                 </div>
                 <div class="row">
@@ -142,7 +142,7 @@
                             value=movimento.tx_servicos_diversos if movimento else
                             '' ,
                             placeholder='',
-                            required='false',
+                            required=False,
                             class='') }}
                     </div>
                 </div>

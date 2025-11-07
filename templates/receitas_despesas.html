@@ -15,20 +15,20 @@
                     {{ form.input_field(name="data_lancamento", type='date',
                             label='Data de lançamento',
                             value=lancamentos.data_lancamento.strftime('%Y-%m-%d') if lancamentos else '' ,
-                            placeholder='', required='false', class='') }}
+                            placeholder='', required=True, class='') }}
                 </div>
                 <div class="col-md-3">
                     {{ form.input_field(name="saldo_anterior", type='money',
                             label='Saldo anterior',
                             value=lancamentos.saldo_anterior if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                 </div>
                 <div class="row">
                     <div class="col">
                         {{ form.input_field(name="historico", type='text',
                             label='Histórico',
                             value=lancamentos.historico if lancamentos else '' ,
-                            placeholder='', required='false', class='') }}
+                            placeholder='', required=True, class='') }}
                     </div>
                 </div>
                 <div class="row">
@@ -36,25 +36,25 @@
                         {{ form.input_field(name="honorario", type='money',
                             label='Honorários',
                             value=lancamentos.honorario if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                     <div class="col-md-3">
                         {{ form.input_field(name="tx_servico_mensal", type='money',
                             label='Tx Serviços Mensais',
                             value=lancamentos.tx_servico_mensal if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                     <div class="col-md-3">
                         {{ form.input_field(name="dirf", type='money',
                             label='DIRF',
                             value=lancamentos.dirf if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                     <div class="col-md-3">
                         {{ form.input_field(name="dap", type='money',
                             label='DAP',
                             value=lancamentos.dap if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                 </div>
                 <div class="row">
@@ -62,25 +62,25 @@
                         {{ form.input_field(name="ada_itr", type='money',
                             label='ADA/ITR',
                             value=lancamentos.ada_itr if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                     <div class="col-md-3">
                         {{ form.input_field(name="dec_terceiro", type='money',
                             label='13° salário',
                             value=lancamentos.dec_terceiro if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                     <div class="col-md-3">
                         {{ form.input_field(name="pagamentos", type='money',
                             label='Pagamentos',
                             value=lancamentos.pagamentos if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                     <div class="col-md-3">
                         {{ form.input_field(name="tx_outros_servicos", type='money',
                             label='Tx Outros Serviços',
                             value=lancamentos.tx_outros_servicos if lancamentos else '' ,
-                            placeholder='0,00', required='false', class='') }}
+                            placeholder='0,00', required=False, class='') }}
                     </div>
                 </div>
 
