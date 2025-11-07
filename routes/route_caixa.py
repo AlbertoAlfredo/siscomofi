@@ -5,7 +5,7 @@ from datetime import date, datetime
 
 from sqlalchemy.dialects.mysql import BIGINT
 
-import models.base as base
+import models.base as bd
 import math, utils
 
 caixa_bp = Blueprint(
@@ -16,7 +16,7 @@ caixa_bp = Blueprint(
 )
 
 
-class Lancamentos(base.Base):
+class Lancamentos(bd.Base):
     __tablename__ = "caixa_banco"
 
     id = Column(Integer, primary_key=True)
@@ -28,14 +28,14 @@ class Lancamentos(base.Base):
     deposito_bloqueado = Column(String)
     taxa_servico_mensal = Column(String)
     tx_servicos_diversos = Column(String)
-    base.init_db()
+    bd.init_db()
 
 def soma_pagamentos_totais(id):
     pagamentos_totais = 0
-    agenfa = base.get_all_filter(Agenfa, id_lancamento=id)
-    iagro = base.get_all_filter(Iagro, id_lancamento=id)
-    pagamentos = base.get_all_filter(Pagamentos, id_lancamento=id)
-    outros = base.get_all_filter(Outros, id_lancamento=id)
+    agenfa = bd.get_all_filter(Agenfa, id_lancamento=id)
+    iagro = bd.get_all_filter(Iagro, id_lancamento=id)
+    pagamentos = bd.get_all_filter(Pagamentos, id_lancamento=id)
+    outros = bd.get_all_filter(Outros, id_lancamento=id)
 
     if agenfa:
         for pagamento in agenfa:
@@ -49,14 +49,14 @@ def soma_pagamentos_totais(id):
     if outros:
         for pagamento in outros:
             pagamentos_totais += pagamento.valor_pagamento
-    tx_diversas = base.get_for_id(Lancamentos, id)
+    tx_diversas = bd.get_for_id(Lancamentos, id)
     pagamentos_totais += float(tx_diversas.taxa_servico_mensal)/100
     pagamentos_totais += float(tx_diversas.tx_servicos_diversos)/100
     return "{:.2f}".format(pagamentos_totais)
 
 def soma_honorarios(id):
     pagamentos_totais = float(soma_pagamentos_totais(id))
-    credito = base.get_for_id(Lancamentos, id)
+    credito = bd.get_for_id(Lancamentos, id)
     debito = credito.debito_saque
     debito = float(debito)/100
     credito = float(credito.credito_deposito)/100
@@ -69,7 +69,7 @@ def get_lancamentos():
         movimento = request.args.get("movimento")
         return render_template("movimento.html", movimento=movimento)
     else:
-        lancamento = base.get_for_id(Lancamentos, id)
+        lancamento = bd.get_for_id(Lancamentos, id)
 
         pagamentos_totais = soma_pagamentos_totais(id)
 
@@ -90,7 +90,7 @@ def create_lancamento():
             "taxa_servico_mensal": utils.money_for_db(to_float(request.form["taxa_servico_mensal"])),
             "tx_servicos_diversos": utils.money_for_db(to_float(request.form["tx_servicos_diversos"])),
         }
-        id = base.add(Lancamentos, lancamento)
+        id = bd.add(Lancamentos, lancamento)
 
         return redirect("/caixabanco?id={}".format(id))
 
@@ -107,7 +107,7 @@ def edit_lancamento():
         "tx_servicos_diversos": utils.money_for_db(to_float(request.form["tx_servicos_diversos"])),
     }
     id = request.form["id"]
-    base.update(Lancamentos, str(id), lancamento)
+    bd.update(Lancamentos, str(id), lancamento)
 
     return redirect("/caixabanco?id={}".format(id))
 
@@ -115,8 +115,8 @@ def edit_lancamento():
 def list_lancamentos():
     page = request.args.get('page', 1, type=int)
     ITENS_POR_PAGINA = 10
-    lancamentos_da_pagina = base.get_paginate(Lancamentos, Lancamentos.data_lancamento, page, ITENS_POR_PAGINA)
-    total_lancamentos = base.count_total(Lancamentos)
+    lancamentos_da_pagina = bd.get_paginate(Lancamentos, Lancamentos.data_lancamento, page, ITENS_POR_PAGINA)
+    total_lancamentos = bd.count_total(Lancamentos)
     total_paginas = math.ceil(total_lancamentos / ITENS_POR_PAGINA)
 
     return render_template("lancamentos_lista.html",
@@ -128,12 +128,12 @@ def list_lancamentos():
 @caixa_bp.route("/caixabanco/apagar", methods=["GET"])
 def delete_lancamento():
     id = request.args.get('id')
-    base.delete(Lancamentos, id)
+    bd.delete(Lancamentos, id)
     return redirect(url_for("caixa_bp.list_lancamentos"))
 
 
 
-class Agenfa(base.Base):
+class Agenfa(bd.Base):
     __tablename__ = "caixa_banco_agenfa"
 
     id = Column(Integer, primary_key=True)
@@ -147,7 +147,7 @@ class Agenfa(base.Base):
 @caixa_bp.route("/caixabanco/agenfa", methods=["GET", "POST"])
 def get_lancamentos_agenfa():
     id = request.args.get('id')
-    lancamento = base.get_for_id(Lancamentos, id)
+    lancamento = bd.get_for_id(Lancamentos, id)
     credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
@@ -161,14 +161,14 @@ def get_lancamentos_agenfa():
             "valor_pagamento": request.form["valor_pagamento"],
         }
 
-        base.add(Agenfa, lancamento_agenfa)
+        bd.add(Agenfa, lancamento_agenfa)
     if request.args.get("apagar"):
-        base.delete(Agenfa, request.args.get("apagar"))
-    agenfa = base.get_all_filter(Agenfa, id_lancamento=id)
+        bd.delete(Agenfa, request.args.get("apagar"))
+    agenfa = bd.get_all_filter(Agenfa, id_lancamento=id)
 
     return render_template("agenfa.html", movimento=lancamento, honorario=soma_honorarios(id), credito=credito, taxa_servico=pagamentos_totais, agenfa=agenfa)
 
-class Iagro(base.Base):
+class Iagro(bd.Base):
     __tablename__ = "caixa_banco_iagro"
 
     id = Column(Integer, primary_key=True)
@@ -180,7 +180,7 @@ class Iagro(base.Base):
 @caixa_bp.route("/caixabanco/iagro", methods=["GET", "POST"])
 def get_lancamentos_iagro():
     id = request.args.get('id')
-    lancamento = base.get_for_id(Lancamentos, id)
+    lancamento = bd.get_for_id(Lancamentos, id)
     credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
@@ -193,14 +193,14 @@ def get_lancamentos_iagro():
             "descricao_pagamento": request.form["descricao_pagamento"],
             "valor_pagamento": request.form["valor_pagamento"],
         }
-        base.add(Iagro, lancamento_iagro)
+        bd.add(Iagro, lancamento_iagro)
     if request.args.get("apagar"):
-        base.delete(Iagro, request.args.get("apagar"))
-    iagro = base.get_all_filter(Iagro, id_lancamento = id)
+        bd.delete(Iagro, request.args.get("apagar"))
+    iagro = bd.get_all_filter(Iagro, id_lancamento = id)
 
     return render_template("iagro.html", movimento=lancamento, honorario=soma_honorarios(id), credito=credito, taxa_servico=pagamentos_totais, iagro=iagro)
 
-class Pagamentos(base.Base):
+class Pagamentos(bd.Base):
     __tablename__ = "caixa_banco_pagamentos"
 
     id = Column(Integer, primary_key=True)
@@ -212,7 +212,7 @@ class Pagamentos(base.Base):
 @caixa_bp.route("/caixabanco/pagamentos", methods=["GET", "POST"])
 def get_lancamentos_pagamentos():
     id = request.args.get('id')
-    lancamento = base.get_for_id(Lancamentos, id)
+    lancamento = bd.get_for_id(Lancamentos, id)
     credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
@@ -226,14 +226,14 @@ def get_lancamentos_pagamentos():
             "descricao_pagamento": request.form["descricao_pagamento"],
             "valor_pagamento": request.form["valor_pagamento"],
         }
-        base.add(Pagamentos, lancamento_pagamentos)
+        bd.add(Pagamentos, lancamento_pagamentos)
     if request.args.get("apagar"):
-        base.delete(Pagamentos, request.args.get("apagar"))
-    pagamentos = base.get_all_filter(Pagamentos, id_lancamento=id)
+        bd.delete(Pagamentos, request.args.get("apagar"))
+    pagamentos = bd.get_all_filter(Pagamentos, id_lancamento=id)
     return render_template("pagamentos.html", movimento=lancamento, honorario=soma_honorarios(id), credito=credito, taxa_servico=pagamentos_totais, pagamentos=pagamentos)
 
 
-class Outros(base.Base):
+class Outros(bd.Base):
     __tablename__ = "caixa_banco_outros"
 
     id = Column(Integer, primary_key=True)
@@ -246,7 +246,7 @@ class Outros(base.Base):
 @caixa_bp.route("/caixabanco/outros", methods=["GET", "POST"])
 def get_lancamentos_outros():
     id = request.args.get('id')
-    lancamento = base.get_for_id(Lancamentos, id)
+    lancamento = bd.get_for_id(Lancamentos, id)
     credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
@@ -260,9 +260,9 @@ def get_lancamentos_outros():
             "descricao_pagamento": request.form["descricao_pagamento"],
             "valor_pagamento": request.form["valor_pagamento"],
         }
-        base.add(Outros, lancamento_outros)
+        bd.add(Outros, lancamento_outros)
     if request.args.get("apagar"):
-        base.delete(Outros, request.args.get("apagar"))
-    outros = base.get_all_filter(Outros, id_lancamento=id)
+        bd.delete(Outros, request.args.get("apagar"))
+    outros = bd.get_all_filter(Outros, id_lancamento=id)
 
     return render_template("outros.html", movimento=lancamento, honorario=soma_honorarios(id), credito=credito, taxa_servico=pagamentos_totais, outros=outros)

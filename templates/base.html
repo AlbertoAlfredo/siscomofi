@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/node_modules/bootstrap/dist/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/bootstrap.min.css') }}">
     <link rel="icon" type="image/png" sizes="40x40" href="{{ url_for('static', filename='logo.png') }}">
     <title>SISCOMOFI</title>
 </head>
@@ -41,11 +41,23 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Movimentação
+                        Caixa/Banco
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/caixabanco">Criar Lançamento Caixa/Banco</a></li>
                         <li><a class="dropdown-item" href="/caixabanco/listar">Listar Lançamentos Caixa/Banco</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Receitas/Despesas
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/receitas_despesas">Criar Movimento Receitas/Despesas</a></li>
+                        <li><a class="dropdown-item" href="/receitas_despesas/listar">Listar Movimento Receitas/Despesas</a></li>
                     </ul>
                 </li>
                 <!-- fim dropdown -->
@@ -76,9 +88,9 @@
                 <!-- fim dropdown -->
 
 
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>#}
+{#                </li>#}
             </ul>
         </div>
     </div>
@@ -90,7 +102,7 @@
 
 <div style="height: 60px"></div>
 </body>
-<script src="{{ url_for('static', filename='/node_modules/bootstrap/dist/js/bootstrap.bundle.js') }}"></script>
+<script src="{{ url_for('static', filename='/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ url_for('static', filename='phone-mask.js') }}"></script>
 <style>
     body {

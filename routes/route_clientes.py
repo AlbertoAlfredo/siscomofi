@@ -51,7 +51,7 @@ def clientes_cadastro():
             "cpf_cnpj": request.form["cpf_cnpj"],
             "inscricao_estadual": request.form["inscricao_estadual"],
             "telefone": request.form["telefone"],
-            "celular": request.form.get("celular"),
+            "celular": request.form["celular"],
             "valor_honorario": request.form["valorhonorario"],
             "observacoes": request.form["observacoes"],
         }
