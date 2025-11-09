@@ -1,0 +1,11 @@
+@media print{
+    @page{
+        size: landscape;
+    }
+    .noprint {
+        display: none !important;
+    }
+}
+table > * {
+    text-align: justify;
+}

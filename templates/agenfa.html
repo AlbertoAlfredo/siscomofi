@@ -69,22 +69,22 @@
                 <div class="row">
                     <div class="col">
                         {{ form.input_field(name="data_pagamento",
-                            type='date', label='Data de pagamento', placeholder='', required='false', class='') }}
+                            type='date', label='Data de pagamento', placeholder='', required="required", class='') }}
                     </div>
                     <div class="col">
                         {{ form.input_field(name="n_cheque",
-                            type='number', label='N° do Cheque', placeholder='', required='false', class='') }}
+                            type='number', label='N° do Cheque', placeholder='', class='') }}
                     </div>
                     <div class="col">
                         {{ form.input_field(name="valor_pagamento",
-                            type='money', label='Valor Pgto', placeholder='', required='false', class='') }}
+                            type='money', label='Valor Pgto', placeholder='', class='') }}
 
                     </div>
 
                     <div class="row">
                     <div class="col">
                         {{ form.input_field(name="descricao_pagamento",
-                            type='text', label='Descrição do pgto', placeholder='', required='false',
+                            type='text', label='Descrição do pgto', placeholder='',
                             class='') }}
                     </div>
                         </div>

@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc, asc
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -10,7 +10,7 @@ db_path = os.path.join(basedir, "siscomofi.db")
 
 # Cria o "motor" que vai se conectar ao nosso banco de dados SQLite
 # O 'echo=True' é ótimo para desenvolvimento, pois imprime no console o SQL que está sendo gerado.
-engine = create_engine(f"sqlite:///{db_path}", echo=False)
+engine = create_engine(f"sqlite:///{db_path}", echo=True)
 
 # Cria uma "fábrica" de sessões para interagir com o banco
 Session = sessionmaker(bind=engine)
@@ -63,25 +63,31 @@ def update(classe, id, dados_update):
     finally:
         session.close()
 
-def get_all(classe):
+def get_all(classe, order_by = False):
     session = Session()
-    lancamento = session.query(classe).order_by(classe.id).all()
-    # lancamento = to_dict(lancamento)
+    if order_by:
+        lancamento = session.query(classe).order_by(asc(order_by))
+    else:
+        lancamento = session.query(classe).order_by(classe.id).all()
     session.close()
     return lancamento
 
 def get_all_filter(classe, **filters):
     session = Session()
     lancamento = session.query(classe).order_by(classe.id).filter_by(**filters).all()
-    # lancamento = to_dict(lancamento)
     session.close()
     return lancamento
 
 def filter_date(classe, classe_date, date_inicio, date_fim):
     session = Session()
-    lancamento = session.query(classe).order_by(classe.id).filter(
-        classe_date >= date_inicio
-    ).filter(classe_date >= date_fim)
+    if date_inicio != False and date_fim != False:
+        lancamento = session.query(classe).order_by(asc(classe_date)).filter(classe_date >= date_inicio).filter(classe_date <= date_fim)
+    elif date_inicio and date_fim == False:
+        lancamento = session.query(classe).order_by(asc(classe_date)).filter(classe_date >= date_inicio)
+    elif date_fim and date_inicio == False:
+        lancamento = session.query(classe).order_by(asc(classe_date)).filter(classe_date <= date_fim)
+    else:
+        lancamento = get_all(classe, order_by=classe_date)
     return lancamento
 
 def get_paginate(classe, order_by , page=1, per_page=10):
@@ -90,7 +96,6 @@ def get_paginate(classe, order_by , page=1, per_page=10):
     offset = (page - 1) * per_page
     lancamentos = session.query(classe).order_by(order_by).limit(per_page).offset(offset).all()
     session.close()
-    # return [to_dict(classe) for cliente in clientes]
     return lancamentos
 
 def get_for_id(classe, id):
@@ -98,7 +103,6 @@ def get_for_id(classe, id):
     session = Session()
     dados = session.query(classe).filter_by(id=id).first()
     session.close()
-    # return to_dict(dados) if dados else None
     return dados if dados else None
 
 def count_total(classe):

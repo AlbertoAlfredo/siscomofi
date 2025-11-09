@@ -1,9 +1,13 @@
-def money_for_db(money: float) -> int:
+from datetime import datetime
+
+
+def money_for_db(money: float | str) -> int:
+    money = float(money)
     return int(money * 100)
 
 
-def money_for_front(money: int) -> str:
-    # return float(money / 100)
+def money_for_front(money: int | str) -> str:
+    money = int(money)
     return f"{money / 100:.2f}"
 
 
@@ -19,3 +23,10 @@ def format_phone(value):
     return num  # Retorna sem formatar se for inválido
 
 # app.jinja_env.filters['phone_format'] = format_phone
+
+
+def date_for_front(date: any) -> any:
+    date = str(date)
+    date = datetime.strptime(date, '%Y-%m-%d')
+    date = date.strftime("%d/%m/%Y")
+    return date
