@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Relatório de Saldo</h1>
+    <table class="table" class="to_print">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Histórico</th>
+                <th scope="col">N° Documento</th>
+                <th scope="col">Crédito</th>
+                <th scope="col">Débito</th>
+                <th scope="col">Bloqueado</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for receita in receitas %}
+            <tr>
+                <td>{{ receita.data }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

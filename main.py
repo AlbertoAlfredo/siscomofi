@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, redirect
-from routes import route_caixa, route_clientes, route_receitas_despesas
+from routes import route_caixa, route_clientes, route_receitas_despesas, route_relatorios
 from models.base import init_db
 from utils import format_phone
 import os, webview
@@ -27,6 +27,7 @@ window = webview.create_window(
 app.register_blueprint(blueprint=route_clientes.cliente_bp)
 app.register_blueprint(blueprint=route_caixa.caixa_bp)
 app.register_blueprint(blueprint=route_receitas_despesas.receitas_despesas_bp)
+app.register_blueprint(blueprint=route_relatorios.relatorios_bp)
 
 
 

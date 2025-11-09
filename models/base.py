@@ -25,10 +25,6 @@ def init_db():
     Base.metadata.create_all(engine)
     print("Tabelas verificadas/criadas.")
 
-# def to_dict(dados):
-#     # Converte o objeto Cliente em um dicionário para fácil uso no front-end.
-#     return {c.name: getattr(dados, c.name) for c in dados.__table__.columns}
-
 
 def add(classe, dados):
     # Adiciona um novo cliente ao banco de dados.
@@ -79,6 +75,13 @@ def get_all_filter(classe, **filters):
     lancamento = session.query(classe).order_by(classe.id).filter_by(**filters).all()
     # lancamento = to_dict(lancamento)
     session.close()
+    return lancamento
+
+def filter_date(classe, classe_date, date_inicio, date_fim):
+    session = Session()
+    lancamento = session.query(classe).order_by(classe.id).filter(
+        classe_date >= date_inicio
+    ).filter(classe_date >= date_fim)
     return lancamento
 
 def get_paginate(classe, order_by , page=1, per_page=10):
