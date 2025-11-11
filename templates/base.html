@@ -10,7 +10,7 @@
     <title>SISCOMOFI</title>
 </head>
 
-<body class="container-fluid">
+<body id="nuvens" class="container-fluid">
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">SISCOMOFI</a>
@@ -82,7 +82,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/relatorios/receitadespesa">Saldo</a></li>
-                        <li><a class="dropdown-item" href="#">Relatório 2</a></li>
+                        <li><a class="dropdown-item" href="/relatorios/honorarios_taxas">Honorários</a></li>
                         <li><a class="dropdown-item" href="#">Relatório 3</a></li>
                     </ul>
                 </li>
@@ -98,8 +98,8 @@
 </nav>
 
 <div style="height: 60px"></div>
+<div>{% block content %}{% endblock %}</div>
 
-{% block content %}{% endblock %}
 
 <div style="height: 60px"></div>
 </body>

@@ -5,6 +5,9 @@
     .noprint {
         display: none !important;
     }
+    body > * {
+        font-size: 12px;
+    }
 }
 table > * {
     text-align: justify;
