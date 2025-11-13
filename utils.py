@@ -8,8 +8,11 @@ def money_for_db(money: any) -> int:
             money = money.replace(",", ".")
         money = float(money)
         return int(money * 100)
+    elif type(money) == int:
+        money = float(money)
+        return int(money * 100)
     else:
-        return 0
+        return money
 
 
 def money_for_front(money: int | str) -> str:
