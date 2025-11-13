@@ -84,11 +84,11 @@ def create_lancamento():
             "data_lancamento": datetime.strptime(request.form["data_lancamento"], '%Y-%m-%d').date() ,
             "n_doc": request.form["n_doc"],
             "historico_lancamento": request.form["historico_lancamento"],
-            "credito_deposito": utils.money_for_db(to_float(request.form["credito_deposito"])),
-            "debito_saque": utils.money_for_db(to_float(request.form["debito_saque"])),
-            "deposito_bloqueado": utils.money_for_db(to_float(request.form["deposito_bloqueado"])),
-            "taxa_servico_mensal": utils.money_for_db(to_float(request.form["taxa_servico_mensal"])),
-            "tx_servicos_diversos": utils.money_for_db(to_float(request.form["tx_servicos_diversos"])),
+            "credito_deposito": utils.money_for_db(request.form["credito_deposito"]),
+            "debito_saque": utils.money_for_db(request.form["debito_saque"]),
+            "deposito_bloqueado": utils.money_for_db(request.form["deposito_bloqueado"]),
+            "taxa_servico_mensal": utils.money_for_db(request.form["taxa_servico_mensal"]),
+            "tx_servicos_diversos": utils.money_for_db(request.form["tx_servicos_diversos"]),
         }
         id = bd.add(Lancamentos, lancamento)
 

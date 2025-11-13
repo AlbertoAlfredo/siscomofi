@@ -1,9 +1,15 @@
 from datetime import datetime
 
 
-def money_for_db(money: float | str) -> int:
-    money = float(money)
-    return int(money * 100)
+def money_for_db(money: any) -> int:
+    if money:
+        if type(money) == str:
+            money = money.replace("R$", "").strip().replace(".", "")
+            money = money.replace(",", ".")
+        money = float(money)
+        return int(money * 100)
+    else:
+        return 0
 
 
 def money_for_front(money: int | str) -> str:
