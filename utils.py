@@ -20,7 +20,7 @@ def money_for_front(money: int | str | None) -> str | float:
         money = int(money)
         return f"{money / 100:.2f}"
     else:
-        return 0.00
+        return "0.00"
 
 
 def format_phone(value):

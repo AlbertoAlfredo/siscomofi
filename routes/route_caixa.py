@@ -50,8 +50,8 @@ def soma_pagamentos_totais(id):
         for pagamento in outros:
             pagamentos_totais += pagamento.valor_pagamento
     tx_diversas = bd.get_for_id(Lancamentos, id)
-    pagamentos_totais += utils.money_for_front(tx_diversas.taxa_servico_mensal)
-    pagamentos_totais += utils.money_for_front(tx_diversas.tx_servicos_diversos)
+    pagamentos_totais += float(utils.money_for_front(tx_diversas.taxa_servico_mensal))
+    pagamentos_totais += float(utils.money_for_front(tx_diversas.tx_servicos_diversos))
     return "{:.2f}".format(pagamentos_totais)
 
 def soma_honorarios(id):
@@ -71,7 +71,7 @@ def get_lancamentos():
     else:
         lancamento = bd.get_for_id(Lancamentos, id)
 
-        pagamentos_totais = soma_pagamentos_totais(id)
+        pagamentos_totais = float(soma_pagamentos_totais(id))
 
 
         credito = float(lancamento.credito_deposito if lancamento.credito_deposito else 0) - float(lancamento.debito_saque if lancamento.debito_saque else 0)
