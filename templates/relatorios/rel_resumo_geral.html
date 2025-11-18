@@ -4,7 +4,7 @@
 
 
 
-    <form class="form-control noprint" method="Get" action="{{ url_for('relatorios.relatorios_receitadespesa') }}">
+    <form class="form-control noprint" method="Get" action="{{ url_for('relatorios.resumo_geral') }}">
         <div class="row input-group">
             <div class="col-md-3">
                 {{ form.input_field(name="data_inicio",
@@ -35,12 +35,15 @@
         <thead>
             <tr>
                 <th scope="col">Data</th>
-                <th scope="col">Histórico</th>
+                <th scope="col" style="min-width: 200px;">Histórico</th>
                 <th scope="col">S. Anterior</th>
-                <th scope="col">N° Documento</th>
-                <th scope="col">Crédito</th>
-                <th scope="col">Débito</th>
-                <th scope="col">Bloqueado</th>
+                <th scope="col">Honorários</th>
+                <th scope="col">Tx Serviços</th>
+                <th scope="col">DIRF</th>
+                <th scope="col">DAP</th>
+                <th scope="col">ADA/ITR</th>
+                <th scope="col">Pagtos</th>
+                <th scope="col">Out Serviços</th>
 
             </tr>
         </thead>
@@ -49,11 +52,14 @@
             <tr>
                 <td>{{ utils.date_for_front(receita.data_lancamento) }}</td>
                 <td>{{ receita.historico_lancamento }}</td>
-                <td>{{ receita.n_doc }}</td>
-                <td>R$:{{ utils.money_for_front(receita.credito_deposito) }}</td>
-                <td>R$:{{ utils.money_for_front(receita.debito_saque) }}</td>
-                <td>R$:{{ utils.money_for_front(receita.deposito_bloqueado) }}</td>
-            </tr>
+                <td>R$: {{ utils.money_for_front(receita.saldo_anterior) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.honorarios) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.tx_servico_mensal) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.dirf) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.dap) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.ada_itr) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.pagamentos) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.tx_outros_servicos) }}</td>
         {% endfor %}
         </tbody>
     </table>

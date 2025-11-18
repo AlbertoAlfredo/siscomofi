@@ -19,7 +19,7 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse noprint" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Início</a>
@@ -81,9 +81,10 @@
                         Relatórios
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/relatorios/saldo">Receitas</a></li>
+                        <li><a class="dropdown-item" href="/relatorios/saldo">Saldo</a></li>
+                        <li><a class="dropdown-item" href="/relatorios/honorarios">Honorários</a></li>
                         <li><a class="dropdown-item" href="/relatorios/honorarios_taxas">Taxas</a></li>
-                        <li><a class="dropdown-item" href="#">Resumo Geral</a></li>
+                        <li><a class="dropdown-item" href="/relatorios/resumo-geral">Resumo Geral</a></li>
                     </ul>
                 </li>
                 <!-- fim dropdown -->
@@ -97,7 +98,7 @@
     </div>
 </nav>
 
-<div style="height: 60px"></div>
+<div style="height: 20px"></div>
 <div>{% block content %}{% endblock %}</div>
 
 

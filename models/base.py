@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import create_engine, desc, asc
+from sqlalchemy import create_engine, desc, asc, or_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -90,6 +90,13 @@ def filter_date(classe, classe_date, date_inicio, date_fim):
         lancamento = get_all(classe, order_by=classe_date)
     return lancamento
 
+def count_total(classe):
+    # Conta o número total de clientes para a paginação.
+    session = Session()
+    total = session.query(classe).count()
+    session.close()
+    return total
+
 def get_paginate(classe, order_by , page=1, per_page=10):
     # Busca uma 'página' de clientes do banco de dados.
     session = Session()
@@ -105,13 +112,16 @@ def get_for_id(classe, id):
     session.close()
     return dados if dados else None
 
-def count_total(classe):
-    # Conta o número total de clientes para a paginação.
+def get_busca(classe, busca: str, colunas):
     session = Session()
-    total = session.query(classe).count()
-    session.close()
-    return total
-
+    query = session.query(classe)
+    if busca and busca.strip():
+        busca = f"%{busca}%"
+        filtros = [coluna.ilike(busca) for coluna in colunas]
+        dados = query.filter(or_(*filtros))
+        return dados
+    else:
+        return get_all(classe)
 
 def delete(classe, id):
     # Deleta um cliente do banco de dados.

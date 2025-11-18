@@ -4,7 +4,8 @@ from flask import render_template, request, Blueprint, redirect, url_for
 from datetime import date, datetime
 from routes.route_caixa import Lancamentos as lancamentos
 from routes.route_receitas_despesas import Lancamentos as receitas
-from models.base import get_all, filter_date
+from routes.route_clientes import Clientes as clientes
+from models.base import get_all, filter_date, get_busca
 import utils
 
 relatorios_bp = Blueprint(
@@ -66,3 +67,12 @@ def resumo_geral():
     else:
         relatorio = get_all(receitas, order_by=receitas.data_lancamento)
     return render_template("relatorios/rel_resumo_geral.html", receitas=relatorio, utils=utils)
+
+@relatorios_bp.route("/relatorios/honorarios", methods=["GET"])
+def honorarios():
+    busca = request.args.get('busca')
+    if busca:
+        relatorio = get_busca(clientes, busca, [clientes.nome_cliente, clientes.nome_propriedade, clientes.cpf_cnpj])
+    else:
+        relatorio = get_all(clientes, order_by=clientes.nome_cliente)
+    return render_template("relatorios/honorarios.html", clientes=relatorio, utils=utils)
