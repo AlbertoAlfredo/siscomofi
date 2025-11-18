@@ -50,16 +50,16 @@ def soma_pagamentos_totais(id):
         for pagamento in outros:
             pagamentos_totais += pagamento.valor_pagamento
     tx_diversas = bd.get_for_id(Lancamentos, id)
-    pagamentos_totais += float(tx_diversas.taxa_servico_mensal)/100
-    pagamentos_totais += float(tx_diversas.tx_servicos_diversos)/100
+    pagamentos_totais += utils.money_for_front(tx_diversas.taxa_servico_mensal)
+    pagamentos_totais += utils.money_for_front(tx_diversas.tx_servicos_diversos)
     return "{:.2f}".format(pagamentos_totais)
 
 def soma_honorarios(id):
     pagamentos_totais = float(soma_pagamentos_totais(id))
     credito = bd.get_for_id(Lancamentos, id)
     debito = credito.debito_saque
-    debito = float(debito)/100
-    credito = float(credito.credito_deposito)/100
+    debito = float(utils.money_for_front(debito))
+    credito = float(utils.money_for_front(credito.credito_deposito))
     return "{:.2f}".format( credito - pagamentos_totais - debito)
 @caixa_bp.route("/caixabanco", methods=["GET"])
 def get_lancamentos():
@@ -74,7 +74,7 @@ def get_lancamentos():
         pagamentos_totais = soma_pagamentos_totais(id)
 
 
-        credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
+        credito = float(lancamento.credito_deposito if lancamento.credito_deposito else 0) - float(lancamento.debito_saque if lancamento.debito_saque else 0)
         return render_template("movimento.html", movimento=lancamento, honorario=soma_honorarios(id), taxa_servico=pagamentos_totais, id=id)
 
 @caixa_bp.route("/caixabanco", methods=["POST"])
@@ -148,7 +148,7 @@ class Agenfa(bd.Base):
 def get_lancamentos_agenfa():
     id = request.args.get('id')
     lancamento = bd.get_for_id(Lancamentos, id)
-    credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
+    credito = float(lancamento.credito_deposito if lancamento.credito_deposito else 0) - float(lancamento.debito_saque if lancamento.debito_saque else 0)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
     if request.method == "POST":
@@ -181,7 +181,7 @@ class Iagro(bd.Base):
 def get_lancamentos_iagro():
     id = request.args.get('id')
     lancamento = bd.get_for_id(Lancamentos, id)
-    credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
+    credito = float(lancamento.credito_deposito if lancamento.credito_deposito else 0) - float(lancamento.debito_saque if lancamento.debito_saque else 0)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
     if request.method == "POST":
@@ -213,7 +213,7 @@ class Pagamentos(bd.Base):
 def get_lancamentos_pagamentos():
     id = request.args.get('id')
     lancamento = bd.get_for_id(Lancamentos, id)
-    credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
+    credito = float(lancamento.credito_deposito if lancamento.credito_deposito else 0) - float(lancamento.debito_saque if lancamento.debito_saque else 0)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
 
@@ -247,7 +247,7 @@ class Outros(bd.Base):
 def get_lancamentos_outros():
     id = request.args.get('id')
     lancamento = bd.get_for_id(Lancamentos, id)
-    credito = float(lancamento.credito_deposito) - float(lancamento.debito_saque)
+    credito = float(lancamento.credito_deposito if lancamento.credito_deposito else 0) - float(lancamento.debito_saque if lancamento.debito_saque else 0)
     credito = utils.money_for_front(int(credito))
     pagamentos_totais = soma_pagamentos_totais(id)
 
