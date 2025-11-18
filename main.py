@@ -1,3 +1,4 @@
+import threading
 from flask import Flask, render_template, url_for, redirect
 from routes import route_caixa, route_clientes, route_receitas_despesas, route_relatorios
 from models.base import init_db
@@ -42,6 +43,6 @@ if __name__ == "__main__":
     init_db()
 
     # Inicia o programa
-    # webview.start(debug=False, icon="static/logo.png")
+    webview.start(debug=False, icon="static/logo.png")
 
-    app.run(debug=True)
+    # app.run(debug=True)
