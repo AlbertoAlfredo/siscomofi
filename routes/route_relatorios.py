@@ -13,12 +13,12 @@ relatorios_bp = Blueprint(
                           template_folder='templates'
                           )
 
-@relatorios_bp.route('/relatorios/receitadespesa', methods=['GET'])
+@relatorios_bp.route('/relatorios/saldo', methods=['GET'])
 def relatorios_receitadespesa():
     data_inicio = datetime.strptime(request.args.get('data_inicio'), '%Y-%m-%d').date() if request.args.get('data_inicio') else False
     data_fim = datetime.strptime(request.args.get('data_fim'), '%Y-%m-%d').date() if request.args.get('data_fim') else False
     if data_inicio and data_fim and data_inicio > data_fim:
-        return render_template("relatorios/relatorio_receitas_despesas.html", erro=True, utils=utils)
+        return render_template("relatorios/rel_saldo.html", erro=True, utils=utils)
     elif data_inicio and data_fim:
         relatorio = filter_date(lancamentos, lancamentos.data_lancamento, data_inicio, data_fim)
     elif data_inicio:
@@ -29,14 +29,14 @@ def relatorios_receitadespesa():
         relatorio = filter_date(lancamentos, lancamentos.data_lancamento, data_inicio, data_fim )
     else:
         relatorio = get_all(lancamentos, order_by=lancamentos.data_lancamento)
-    return render_template("relatorios/relatorio_receitas_despesas.html", receitas=relatorio, utils=utils)
+    return render_template("relatorios/rel_saldo.html", receitas=relatorio, utils=utils)
 
 @relatorios_bp.route('/relatorios/honorarios_taxas', methods=['GET'])
 def relatorios_honorarios():
     data_inicio = datetime.strptime(request.args.get('data_inicio'), '%Y-%m-%d').date() if request.args.get('data_inicio') else False
     data_fim = datetime.strptime(request.args.get('data_fim'), '%Y-%m-%d').date() if request.args.get('data_fim') else False
     if data_inicio and data_fim and data_inicio > data_fim:
-        return render_template("relatorios/rel_honorarios_taxas.html", erro=True, utils=utils)
+        return render_template("relatorios/rel_taxas.html", erro=True, utils=utils)
     elif data_inicio and data_fim:
         relatorio = filter_date(receitas, receitas.data_lancamento, data_inicio, data_fim)
     elif data_inicio:
@@ -47,4 +47,4 @@ def relatorios_honorarios():
         relatorio = filter_date(receitas, receitas.data_lancamento, data_inicio, data_fim )
     else:
         relatorio = get_all(receitas, order_by=receitas.data_lancamento)
-    return render_template("relatorios/rel_honorarios_taxas.html", receitas=relatorio, utils=utils)
+    return render_template("relatorios/rel_taxas.html", receitas=relatorio, utils=utils)
