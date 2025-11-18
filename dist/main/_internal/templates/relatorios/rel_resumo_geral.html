@@ -1,0 +1,67 @@
+{% extends "base.html" %}  {% import "_form_macros.html" as form %}
+
+{% block content %}
+
+
+
+    <form class="form-control noprint" method="Get" action="{{ url_for('relatorios.resumo_geral') }}">
+        <div class="row input-group">
+            <div class="col-md-3">
+                {{ form.input_field(name="data_inicio",
+                            type='date', label='Início:', placeholder='', required=False,
+                            class='') }}
+            </div>
+            <div class="col-md-3">
+                {{ form.input_field(name="data_fim",
+                            type='date', label='Fim:', placeholder='', required=False,
+                            class='') }}
+            </div>
+            <div class="col-md-3">
+                <button class="btn  btn-info" type="submit" >Buscar</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-secondary" onclick="window.print()">Imprimir</button>
+            </div>
+
+        </div>
+    </form>
+
+    {% if erro %}
+        <h2>A data utilizada não é válida</h2>
+    {% endif %}
+
+    <h1>Resumo Geral</h1>
+    <table class="table" class="to_print">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col" style="min-width: 200px;">Histórico</th>
+                <th scope="col">S. Anterior</th>
+                <th scope="col">Honorários</th>
+                <th scope="col">Tx Serviços</th>
+                <th scope="col">DIRF</th>
+                <th scope="col">DAP</th>
+                <th scope="col">ADA/ITR</th>
+                <th scope="col">Pagtos</th>
+                <th scope="col">Out Serviços</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for receita in receitas %}
+            <tr>
+                <td>{{ utils.date_for_front(receita.data_lancamento) }}</td>
+                <td>{{ receita.historico_lancamento }}</td>
+                <td>R$: {{ utils.money_for_front(receita.saldo_anterior) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.honorarios) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.tx_servico_mensal) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.dirf) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.dap) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.ada_itr) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.pagamentos) }}</td>
+                <td>R$: {{ utils.money_for_front(receita.tx_outros_servicos) }}</td>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/utils.css') }}">
+    <link rel="icon" type="image/png" sizes="40x40" href="{{ url_for('static', filename='logo.png') }}">
+    <title>SISCOMOFI</title>
+</head>
+
+<body id="nuvens" class="container-fluid">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">SISCOMOFI</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse noprint" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Início</a>
+                </li>
+
+                <!-- Inicio dropdown -->
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"#}
+{#                       aria-expanded="false">#}
+{#                        Arquivo#}
+{#                    </a>#}
+{#                    <ul class="dropdown-menu">#}
+{#                        <li><a class="dropdown-item" href="#">Clientes</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">02</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">03</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Caixa/Banco
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/caixabanco">Criar Lançamento Caixa/Banco</a></li>
+                        <li><a class="dropdown-item" href="/caixabanco/listar">Listar Lançamentos Caixa/Banco</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Receitas/Despesas
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/receitas_despesas">Criar Movimento Receitas/Despesas</a></li>
+                        <li><a class="dropdown-item" href="/receitas_despesas/listar">Listar Movimento Receitas/Despesas</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Clientes
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/clientes-cadastro">Cadastro</a></li>
+                        <li><a class="dropdown-item" href="/clientes_lista">Listar</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
+                <!-- Inicio dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Relatórios
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/relatorios/saldo">Saldo</a></li>
+                        <li><a class="dropdown-item" href="/relatorios/honorarios">Honorários</a></li>
+                        <li><a class="dropdown-item" href="/relatorios/honorarios_taxas">Taxas</a></li>
+                        <li><a class="dropdown-item" href="/relatorios/resumo-geral">Resumo Geral</a></li>
+                    </ul>
+                </li>
+                <!-- fim dropdown -->
+
+
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>#}
+{#                </li>#}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div style="height: 20px"></div>
+<div>{% block content %}{% endblock %}</div>
+
+
+<div style="height: 60px"></div>
+</body>
+<script src="{{ url_for('static', filename='/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='phone-mask.js') }}"></script>
+<style>
+    body {
+        -webkit-user-select: text; /* Para compatibilidade com o motor do Chrome/Safari */
+        -ms-user-select: text; /* Para compatibilidade com o motor da Microsoft */
+        user-select: text; /* O padrão */
+    }
+</style>
+</html>

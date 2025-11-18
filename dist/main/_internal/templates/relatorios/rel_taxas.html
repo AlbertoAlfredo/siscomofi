@@ -1,0 +1,60 @@
+{% extends "base.html" %}  {% import "_form_macros.html" as form %}
+
+{% block content %}
+
+
+
+    <form class="form-control noprint" method="Get" action="{{ url_for('relatorios.relatorios_honorarios') }}">
+        <div class="row input-group">
+            <div class="col-md-3">
+                {{ form.input_field(name="data_inicio",
+                            type='date', label='Início:', placeholder='', required=False,
+                            class='') }}
+            </div>
+            <div class="col-md-3">
+                {{ form.input_field(name="data_fim",
+                            type='date', label='Fim:', placeholder='', required=False,
+                            class='') }}
+            </div>
+            <div class="col-md-3">
+                <button class="btn  btn-info" type="submit" >Buscar</button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-secondary" onclick="window.print()">Imprimir</button>
+            </div>
+
+        </div>
+    </form>
+
+    {% if erro %}
+        <h2>A data utilizada não é válida</h2>
+    {% endif %}
+
+    <h1>Relatório Taxas</h1>
+    <table class="table" class="to_print">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Histórico</th>
+{#                <th scope="col">N° Documento</th>#}
+                <th scope="col">Tx Serviços Mensais</th>
+                <th scope="col">Tx Outros Serviços</th>
+                <th scope="col">Honorários</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for receita in receitas %}
+            <tr>
+                <td>{{ utils.date_for_front(receita.data_lancamento) }}</td>
+                <td>{{ receita.historico }}</td>
+{#                <td>{{ receita.n_doc }}</td>#}
+                <td>R$:{{ utils.money_for_front(receita.tx_servico_mensal) }}</td>
+                <td>R$:{{ utils.money_for_front(receita.tx_outros_servicos) }}</td>
+                <td>R$:{{ utils.money_for_front(receita.honorario) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
