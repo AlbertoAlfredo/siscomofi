@@ -48,3 +48,21 @@ def relatorios_honorarios():
     else:
         relatorio = get_all(receitas, order_by=receitas.data_lancamento)
     return render_template("relatorios/rel_taxas.html", receitas=relatorio, utils=utils)
+
+@relatorios_bp.route("/relatorios/resumo-geral", methods=["GET"])
+def resumo_geral():
+    data_inicio = datetime.strptime(request.args.get('data_inicio'), '%Y-%m-%d').date() if request.args.get('data_inicio') else False
+    data_fim = datetime.strptime(request.args.get('data_fim'), '%Y-%m-%d').date() if request.args.get('data_fim') else False
+    if data_inicio and data_fim and data_inicio > data_fim:
+        return render_template("relatorios/rel_resumo_geral.html", erro=True, utils=utils)
+    elif data_inicio and data_fim:
+        relatorio = filter_date(receitas, receitas.data_lancamento, data_inicio, data_fim)
+    elif data_inicio:
+        relatorio = filter_date(receitas, receitas.data_lancamento, date_inicio=data_inicio, date_fim=False)
+    elif data_fim:
+        relatorio = filter_date(receitas, receitas.data_lancamento, date_inicio=False, date_fim=data_fim)
+    elif data_inicio and data_fim:
+        relatorio = filter_date(receitas, receitas.data_lancamento, data_inicio, data_fim )
+    else:
+        relatorio = get_all(receitas, order_by=receitas.data_lancamento)
+    return render_template("relatorios/rel_resumo_geral.html", receitas=relatorio, utils=utils)
