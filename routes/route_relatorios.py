@@ -32,8 +32,7 @@ def relatorios_receitadespesa():
         relatorio = filter_date(lancamentos, lancamentos.data_lancamento, data_inicio, data_fim )
     else:
         relatorio = get_all(lancamentos, order_by=lancamentos.data_lancamento)
-    pagamentos_totais = float(soma_pagamentos_totais(lancamentos.id)) * 100
-    return render_template("relatorios/rel_saldo.html", receitas=relatorio, utils=utils, pagamentos=pagamentos_totais)
+    return render_template("relatorios/rel_saldo.html", receitas=relatorio, utils=utils, pagamentos=soma_pagamentos_totais)
 
 @relatorios_bp.route('/relatorios/honorarios_taxas', methods=['GET'])
 def relatorios_honorarios():

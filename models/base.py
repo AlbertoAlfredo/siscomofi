@@ -6,11 +6,12 @@ from sqlalchemy.ext.declarative import declarative_base
 # Pega o caminho absoluto do diretório onde este arquivo está
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Define o caminho completo para o arquivo do banco de dados
-db_path = os.path.join(basedir, "//servidor/Compartilhada/siscomofy/siscomofi.db")
+# db_path = os.path.join(basedir, "//servidor/Compartilhada/siscomofy/siscomofi.db")
+db_path = os.path.join(basedir, "siscomofi.db")
 
 # Cria o "motor" que vai se conectar ao nosso banco de dados SQLite
 # O 'echo=True' é ótimo para desenvolvimento, pois imprime no console o SQL que está sendo gerado.
-engine = create_engine(f"sqlite:///{db_path}", echo=True)
+engine = create_engine(f"sqlite:///{db_path}", echo=False)
 
 # Cria uma "fábrica" de sessões para interagir com o banco
 Session = sessionmaker(bind=engine)
@@ -73,6 +74,7 @@ def get_all(classe, order_by = False):
     return lancamento
 
 def get_all_filter(classe, **filters):
+    print(f"DEBUG FILTROS: {filters}")
     session = Session()
     lancamento = session.query(classe).order_by(classe.id).filter_by(**filters).all()
     session.close()

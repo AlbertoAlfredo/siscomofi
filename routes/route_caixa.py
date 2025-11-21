@@ -29,6 +29,48 @@ class Lancamentos(bd.Base):
     taxa_servico_mensal = Column(String)
     tx_servicos_diversos = Column(String)
     bd.init_db()
+    
+class Pagamentos(bd.Base):
+    __tablename__ = "caixa_banco_pagamentos"
+
+    id = Column(Integer, primary_key=True)
+    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
+    data_pagamento = Column(Date)
+    n_cheque = Column(BIGINT)
+    descricao_pagamento = Column(String)
+    valor_pagamento = Column(BIGINT)
+
+class Agenfa(bd.Base):
+    __tablename__ = "caixa_banco_agenfa"
+
+    id = Column(Integer, primary_key=True)
+    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
+    data_pagamento = Column(Date)
+    n_cheque = Column(BIGINT)
+    descricao_pagamento = Column(String)
+    valor_pagamento = Column(BIGINT)
+    
+class Iagro(bd.Base):
+    __tablename__ = "caixa_banco_iagro"
+
+    id = Column(Integer, primary_key=True)
+    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
+    data_pagamento = Column(Date)
+    n_cheque = Column(BIGINT)
+    descricao_pagamento = Column(String)
+    valor_pagamento = Column(BIGINT)
+
+
+class Outros(bd.Base):
+    __tablename__ = "caixa_banco_outros"
+
+    id = Column(Integer, primary_key=True)
+    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
+    data_pagamento = Column(Date)
+    n_cheque = Column(BIGINT)
+    descricao_pagamento = Column(String)
+    valor_pagamento = Column(BIGINT)
+    
 
 def soma_pagamentos_totais(id):
     pagamentos_totais = 0
@@ -50,17 +92,22 @@ def soma_pagamentos_totais(id):
         for pagamento in outros:
             pagamentos_totais += pagamento.valor_pagamento
     tx_diversas = bd.get_for_id(Lancamentos, id)
-    pagamentos_totais += float(utils.money_for_front(tx_diversas.taxa_servico_mensal))
-    pagamentos_totais += float(utils.money_for_front(tx_diversas.tx_servicos_diversos))
-    return "{:.2f}".format(pagamentos_totais)
+    pagamentos_totais += utils.money_for_db(tx_diversas.taxa_servico_mensal)
+    pagamentos_totais += utils.money_for_db(tx_diversas.tx_servicos_diversos)
+    return pagamentos_totais * 100
 
 def soma_honorarios(id):
-    pagamentos_totais = float(soma_pagamentos_totais(id))
+    pagamentos_totais = soma_pagamentos_totais(id)
     credito = bd.get_for_id(Lancamentos, id)
     debito = credito.debito_saque
-    debito = float(utils.money_for_front(debito))
-    credito = float(utils.money_for_front(credito.credito_deposito))
-    return "{:.2f}".format( credito - pagamentos_totais - debito)
+    
+    credito = credito.credito_deposito
+    debito = utils.money_for_db(debito)
+    
+    
+    return "{:.2f}".format( float(int(credito) - int(pagamentos_totais) - int(debito)) / 100)
+
+
 @caixa_bp.route("/caixabanco", methods=["GET"])
 def get_lancamentos():
     id = request.args.get('id')
@@ -133,15 +180,6 @@ def delete_lancamento():
 
 
 
-class Agenfa(bd.Base):
-    __tablename__ = "caixa_banco_agenfa"
-
-    id = Column(Integer, primary_key=True)
-    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
-    data_pagamento = Column(Date)
-    n_cheque = Column(BIGINT)
-    descricao_pagamento = Column(String)
-    valor_pagamento = Column(BIGINT)
 
 
 @caixa_bp.route("/caixabanco/agenfa", methods=["GET", "POST"])
@@ -168,15 +206,7 @@ def get_lancamentos_agenfa():
 
     return render_template("agenfa.html", movimento=lancamento, honorario=soma_honorarios(id), credito=credito, taxa_servico=pagamentos_totais, agenfa=agenfa)
 
-class Iagro(bd.Base):
-    __tablename__ = "caixa_banco_iagro"
 
-    id = Column(Integer, primary_key=True)
-    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
-    data_pagamento = Column(Date)
-    n_cheque = Column(BIGINT)
-    descricao_pagamento = Column(String)
-    valor_pagamento = Column(BIGINT)
 @caixa_bp.route("/caixabanco/iagro", methods=["GET", "POST"])
 def get_lancamentos_iagro():
     id = request.args.get('id')
@@ -200,15 +230,7 @@ def get_lancamentos_iagro():
 
     return render_template("iagro.html", movimento=lancamento, honorario=soma_honorarios(id), credito=credito, taxa_servico=pagamentos_totais, iagro=iagro)
 
-class Pagamentos(bd.Base):
-    __tablename__ = "caixa_banco_pagamentos"
 
-    id = Column(Integer, primary_key=True)
-    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
-    data_pagamento = Column(Date)
-    n_cheque = Column(BIGINT)
-    descricao_pagamento = Column(String)
-    valor_pagamento = Column(BIGINT)
 @caixa_bp.route("/caixabanco/pagamentos", methods=["GET", "POST"])
 def get_lancamentos_pagamentos():
     id = request.args.get('id')
@@ -233,15 +255,6 @@ def get_lancamentos_pagamentos():
     return render_template("pagamentos.html", movimento=lancamento, honorario=soma_honorarios(id), credito=credito, taxa_servico=pagamentos_totais, pagamentos=pagamentos)
 
 
-class Outros(bd.Base):
-    __tablename__ = "caixa_banco_outros"
-
-    id = Column(Integer, primary_key=True)
-    id_lancamento = Column(Integer, ForeignKey('caixa_banco.id'))
-    data_pagamento = Column(Date)
-    n_cheque = Column(BIGINT)
-    descricao_pagamento = Column(String)
-    valor_pagamento = Column(BIGINT)
 
 @caixa_bp.route("/caixabanco/outros", methods=["GET", "POST"])
 def get_lancamentos_outros():
