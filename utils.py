@@ -17,7 +17,7 @@ def money_for_db(money: any) -> int:
 
 def money_for_front(money: int | str | None) -> str | float:
     if money:
-        money = int(money)
+        money = int(float(money))
         return f"{money / 100:.2f}"
     else:
         return "0.00"

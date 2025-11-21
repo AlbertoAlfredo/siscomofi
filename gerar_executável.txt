@@ -1,0 +1,6 @@
+pyinstaller --onedir --name siscomofy --icon=icon.ico `
+--add-data "templates;templates" `
+--add-data "models;models" `
+--add-data "routes;routes" `
+--add-data "static;static" `
+main.py

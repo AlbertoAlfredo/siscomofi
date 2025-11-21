@@ -23,7 +23,7 @@
         <h2>A data utilizada não é válida</h2>
     {% endif %}
 
-    <h1>Resumo Geral</h1>
+    <h1>Relatório Honorários</h1>
     <table class="table" class="to_print">
         <thead>
 
@@ -46,7 +46,7 @@
                 <td>{{ cliente.uf }}</td>
                 <td>{{ cliente.cpf_cnpj }}</td>
                 <td>{{ cliente.inscricao_estadual }}</td>
-                <td>R$: {{ utils.money_for_front(cliente.valor_honorario) }}</td>
+                <td>R$: {{ utils.money_for_front(cliente.valor_honorario * 100) }}</td>
         {% endfor %}
         </tbody>
     </table>

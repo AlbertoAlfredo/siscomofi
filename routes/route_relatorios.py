@@ -3,10 +3,12 @@ import math
 from flask import render_template, request, Blueprint, redirect, url_for
 from datetime import date, datetime
 from routes.route_caixa import Lancamentos as lancamentos
+from routes.route_caixa import soma_pagamentos_totais
 from routes.route_receitas_despesas import Lancamentos as receitas
 from routes.route_clientes import Clientes as clientes
 from models.base import get_all, filter_date, get_busca
 import utils
+
 
 relatorios_bp = Blueprint(
                     'relatorios',
@@ -30,7 +32,8 @@ def relatorios_receitadespesa():
         relatorio = filter_date(lancamentos, lancamentos.data_lancamento, data_inicio, data_fim )
     else:
         relatorio = get_all(lancamentos, order_by=lancamentos.data_lancamento)
-    return render_template("relatorios/rel_saldo.html", receitas=relatorio, utils=utils)
+    pagamentos_totais = float(soma_pagamentos_totais(lancamentos.id)) * 100
+    return render_template("relatorios/rel_saldo.html", receitas=relatorio, utils=utils, pagamentos=pagamentos_totais)
 
 @relatorios_bp.route('/relatorios/honorarios_taxas', methods=['GET'])
 def relatorios_honorarios():

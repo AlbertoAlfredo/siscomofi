@@ -100,11 +100,11 @@ def edit_lancamento():
         "data_lancamento": datetime.strptime(request.form["data_lancamento"], '%Y-%m-%d').date(),
         "n_doc": request.form["n_doc"],
         "historico_lancamento": request.form["historico_lancamento"],
-        "credito_deposito": utils.money_for_db(to_float(request.form["credito_deposito"])),
-        "debito_saque": utils.money_for_db(to_float(request.form["debito_saque"])),
-        "deposito_bloqueado": utils.money_for_db(to_float(request.form["deposito_bloqueado"])),
-        "taxa_servico_mensal": utils.money_for_db(to_float(request.form["taxa_servico_mensal"])),
-        "tx_servicos_diversos": utils.money_for_db(to_float(request.form["tx_servicos_diversos"])),
+        "credito_deposito": utils.money_for_db(to_float(request.form["credito_deposito"] if request.form["credito_deposito"] else 0)),
+        "debito_saque": utils.money_for_db(to_float(request.form["debito_saque"] if request.form["debito_saque"] else 0)),
+        "deposito_bloqueado": utils.money_for_db(to_float(request.form["deposito_bloqueado"] if request.form["deposito_bloqueado"] else 0)),
+        "taxa_servico_mensal": utils.money_for_db(to_float(request.form["taxa_servico_mensal"] if request.form["taxa_servico_mensal"] else 0)),
+        "tx_servicos_diversos": utils.money_for_db(to_float(request.form["tx_servicos_diversos"] if request.form["tx_servicos_diversos"] else 0)),
     }
     id = request.form["id"]
     bd.update(Lancamentos, str(id), lancamento)

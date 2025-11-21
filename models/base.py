@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 # Pega o caminho absoluto do diretório onde este arquivo está
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Define o caminho completo para o arquivo do banco de dados
-db_path = os.path.join(basedir, "siscomofi.db")
+db_path = os.path.join(basedir, "//servidor/Compartilhada/siscomofy/siscomofi.db")
 
 # Cria o "motor" que vai se conectar ao nosso banco de dados SQLite
 # O 'echo=True' é ótimo para desenvolvimento, pois imprime no console o SQL que está sendo gerado.
