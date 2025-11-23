@@ -1,0 +1,161 @@
+{% extends "_lancamentos_caixa_banco.html" %}
+
+
+{% block forms %}
+
+    {% if movimento %}
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a href={{ url_for('caixa_bp.get_lancamentos', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-movimento"
+                    class="nav-link active"
+                    type="button"
+            >
+                Movimento
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_agenfa', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-agenfa"
+                    aria-selected="false"
+                    class="nav-link"
+                    type="button"
+            >
+                AGENFA
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_iagro', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-iagro"
+                    aria-selected="false"
+                    class="nav-link"
+                    type="button"
+            >
+                IAGRO
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_pagamentos', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-pagamentos"
+                    aria-selected="false"
+                    class="nav-link"
+                    type="button"
+            >
+                Pagamentos
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_outros', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-outros"
+                    aria-selected="false"
+                    class="nav-link"
+                    type="button"
+            >
+                Outros Serviços
+            </button>
+            </a>
+        </div>
+    </nav>
+
+    {% endif %}
+    {% if movimento %}
+        <form action={{ "/caixabanco/edit" }} method="POST">
+
+    {% else %}
+        <form action={{ "/caixabanco" }} method="POST">
+    {% endif %}
+        <div class="tab-content" id="nav-tabContent">
+            <div
+                    aria-labelledby="nav-home-tab"
+                    class="tab-pane fade active show"
+                    id="nav-movimento"
+                    role="tabpanel"
+                    tabindex="0"
+            >
+                <h3>Movimento</h3>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="data_lancamento", type='date',
+                            label='Data de lançamento',
+                            value=movimento.data_lancamento.strftime('%Y-%m-%d') if movimento else '' ,
+                            placeholder='', required=True, class='') }}
+                    </div>
+                    {% if movimento %}
+                    <div style="display: none" >
+                        {{ form.input_field(name="id", type='text',
+                            label='id',
+                            value=id if movimento else '' ,
+                            placeholder='', required=False, class='') }}
+                    </div>
+                    {% endif %}
+                    <div class="col">
+                        {{ form.input_field(name="n_doc", type='number',
+                            label='Número do Documento',
+                            value=movimento.n_doc|int if movimento else '' ,
+                            placeholder='000', required=False, class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="historico_lancamento", type='text',
+                            label='Histórico de Lançamento',
+                            value=movimento.historico_lancamento if movimento else '' ,
+                            placeholder='', required=False, class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+
+                        {{ form.input_field(name="credito_deposito",
+                            type='money', label='Crédito/Depósito R$:',
+                            value=movimento.credito_deposito if movimento else ''
+                            , placeholder='0,00', required=False, class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="debito_saque", type='money',
+                            label='Débito/Saque R$:', value=movimento.debito_saque
+                            if movimento else '' , placeholder='',
+                            required=False, class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="deposito_bloqueado",
+                            type='money', label='Depósito bloqueado R$:',
+                            value=movimento.deposito_bloqueado if movimento else
+                            '' , placeholder='', required=False, class='') }}
+                    </div>
+                    <div class="col">
+                        {{ form.input_field(name="taxa_servico_mensal",
+                            type='money', label='Taxa de serviços mensais R$:',
+                            value=movimento.taxa_servico_mensal if movimento else
+                            '' , placeholder='', required=False, class='') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.input_field(name="tx_servicos_diversos",
+                            type='money',
+                            label='Taxa de Serviços Diversos R$:',
+                            value=movimento.tx_servicos_diversos if movimento else
+                            '' ,
+                            placeholder='',
+                            required=False,
+                            class='') }}
+                    </div>
+                </div>
+            </div>
+
+
+                <hr/>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href={{ url_for('caixa_bp.get_lancamentos') }}>
+            <button type="button" class="btn btn-danger">Limpar</button>
+        </a>
+    </form>
+
+
+{% endblock %}
