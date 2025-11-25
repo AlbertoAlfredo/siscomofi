@@ -1,0 +1,72 @@
+{% extends "caixa/_lancamentos_caixa_banco.html" %}
+
+
+{% block menu %}
+
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a href={{ url_for('caixa_bp.get_lancamentos', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-movimento"
+                    aria-selected="false"
+                    class="nav-link {% if current == 'caixa_bp.get_lancamentos' %}active{% endif %}"
+                    type="button"
+            >
+                Movimento
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_agenfa', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-agenfa"
+
+                    class="nav-link {% if current == 'caixa_bp.get_lancamentos_agenfa' %}active{% endif %}"
+                    type="button"
+            >
+                AGENFA
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_iagro', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-iagro"
+                    aria-selected="false"
+                    class="nav-link {% if current == 'caixa_bp.get_lancamentos_iagro' %}active{% endif %}"
+                    type="button"
+            >
+                IAGRO
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_pagamentos', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-pagamentos"
+                    aria-selected="false"
+                    class="nav-link {% if current == 'caixa_bp.get_lancamentos_pagamentos' %}active{% endif %}"
+                    type="button"
+            >
+                Pagamentos
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_depositos', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-pagamentos"
+                    aria-selected="false"
+                    class="nav-link {% if current == 'caixa_bp.get_lancamentos_depositos' %}active{% endif %}"
+                    type="button"
+            >
+                Depósitos
+            </button>
+            </a>
+            <a href={{ url_for('caixa_bp.get_lancamentos_outros', id=movimento.id) }}>
+            <button
+                    aria-controls="nav-outros"
+                    aria-selected="false"
+                    class="nav-link {% if current == 'caixa_bp.get_lancamentos_outros' %}active{% endif %}"
+                    type="button"
+            >
+                Outros Serviços
+            </button>
+            </a>
+        </div>
+    </nav>
+
+{% endblock %}
