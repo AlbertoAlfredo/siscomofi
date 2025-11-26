@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISCOMOFI - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #f4f6f9; /* Um cinza bem clarinho de fundo, melhor que branco puro */
+        }
+        .card-dashboard {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra suave */
+            transition: transform 0.2s;
+        }
+        .card-dashboard:hover {
+            transform: translateY(-5px); /* Efeito leve ao passar o mouse */
+        }
+        .icon-box {
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-chart-line text-success me-2"></i>SISCOMOFI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fa-solid fa-house me-1"></i> Início</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-wallet me-1"></i> Caixa/Banco
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                            <li><a class="dropdown-item" href="#">Criar Lançamento</a></li>
+                            <li><a class="dropdown-item" href="#">Listar Lançamentos</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-money-bill-transfer me-1"></i> Receitas/Despesas
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                            <li><a class="dropdown-item" href="#">Criar Movimento</a></li>
+                            <li><a class="dropdown-item" href="#">Listar Movimento</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-users me-1"></i> Clientes</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-file-invoice me-1"></i> Relatórios
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                            <li><a class="dropdown-item" href="#">Saldo</a></li>
+                            <li><a class="dropdown-item" href="#">Honorários</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        
+        <h2 class="mb-4 text-secondary fw-bold">Visão Geral</h2>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-primary text-white h-100">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Saldo Atual</h6>
+                            <h3 class="fw-bold">R$ 12.500,00</h3>
+                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-sack-dollar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-success text-white h-100">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Receitas (Mês)</h6>
+                            <h3 class="fw-bold">R$ 5.200,00</h3>
+                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-danger text-white h-100">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Despesas (Mês)</h6>
+                            <h3 class="fw-bold">R$ 1.800,00</h3>
+                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-dashboard bg-warning text-dark h-100">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Novos Clientes</h6>
+                            <h3 class="fw-bold">12</h3>
+                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-user-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold text-secondary"><i class="fa-solid fa-list me-2"></i>Últimas Movimentações</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover table-striped mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>21/11/2025</td>
+                                    <td>Pagamento Cliente A</td>
+                                    <td><span class="badge bg-success">Receita</span></td>
+                                    <td>R$ 500,00</td>
+                                </tr>
+                                <tr>
+                                    <td>20/11/2025</td>
+                                    <td>Conta de Luz</td>
+                                    <td><span class="badge bg-danger">Despesa</span></td>
+                                    <td>R$ 150,00</td>
+                                </tr>
+                                <tr>
+                                    <td>19/11/2025</td>
+                                    <td>Serviço Consultoria</td>
+                                    <td><span class="badge bg-success">Receita</span></td>
+                                    <td>R$ 1.200,00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold text-secondary">Ações Rápidas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-lg text-start"><i class="fa-solid fa-plus me-2"></i> Nova Receita</button>
+                            <button class="btn btn-danger btn-lg text-start"><i class="fa-solid fa-minus me-2"></i> Nova Despesa</button>
+                            <button class="btn btn-primary btn-lg text-start"><i class="fa-solid fa-user me-2"></i> Cadastrar Cliente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

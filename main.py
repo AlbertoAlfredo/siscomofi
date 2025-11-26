@@ -43,6 +43,6 @@ if __name__ == "__main__":
     init_db()
 
     # Inicia o programa
-    # webview.start(debug=False, icon="static/logo.png")
+    webview.start(debug=False, icon="static/logo.png")
 
-    app.run(debug=True)
+    # app.run(debug=True)

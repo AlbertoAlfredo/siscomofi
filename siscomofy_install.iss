@@ -13,14 +13,14 @@ PrivilegesRequired=admin
 
 [Files]
 ; Copia TUDO da pasta dist/siscomofi para C:\siscomofi
-Source: "dist\siscomofi\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs replaceexisting
+Source: "dist\siscomofi\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 ; Atalho no Menu Iniciar
 Name: "{group}\SISCOMOFI"; Filename: "{app}\siscomofi.exe"
 
 ; Atalho na Área de Trabalho
-Name: "{desktop}\SISCOMOFI"; Filename: "{app}\siscomofi.exe"
+Name: "{autodesktop}\SISCOMOFI"; Filename: "{app}\siscomofi.exe"
 
 [Run]
 Filename: "{app}\siscomofi.exe"; Description: "Executar o SISCOMOFI agora"; Flags: nowait postinstall skipifsilent
