@@ -35,8 +35,19 @@ O projeto SisCoMoFi foi construído com as seguintes tecnologias:
 * **Interface Desktop:** [PyWebView]
 * **Templating:** [Jinja2] (com filtros customizados para formatação de telefone e moeda)
 * **Frontend/CSS:** [Bootstrap]
+* **Instalador:** [Inno Setup]
 
-## 📦 Instalação e Execução
+## 📦 Instalação (Usuário Final)
+
+Para utilizar o sistema sem a necessidade de configurar o ambiente Python, utilize o instalador disponível:
+
+1. Baixe o arquivo `siscomofi_installer.exe`.
+2. Execute o instalador e siga as instruções na tela.
+3. Após a instalação, o sistema poderá ser iniciado diretamente pelo ícone na área de trabalho ou menu iniciar.
+
+## 💻 Execução via Código Fonte (Desenvolvimento)
+
+Caso queira rodar o projeto para fins de desenvolvimento ou modificação:
 
 ### Pré-requisitos
 
